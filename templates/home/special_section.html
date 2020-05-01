@@ -1,0 +1,22 @@
+{% if request.user.is_authenticated %}
+
+    {% if request.user in ad.favourite.all %}
+        {% csrf_token %}
+        <ul class="list_none pr_action_btn">
+            <li class="add-to-cart"><a href="#" id = "cart" data-id="{{ ad.id }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
+            <li><a href="#" id = "wishlist" data-id="{{ ad.id }}"><i class="icon-heart"></i></a></li>
+        </ul>
+    {% else %}
+        <ul class="list_none pr_action_btn">
+            <li class="add-to-cart"><a href="#" id = "cart" data-id="{{ ad.id }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
+            <li><a href="#" id = "wishlist" data-id="{{ ad.id }}"><i class="icon-heart-alt"></i></a></li>
+        </ul>
+    {% endif %}
+{% else %}
+    <ul class="list_none pr_action_btn">
+        <li class="add-to-cart"><a href="{% url 'home:favourite_ad' id=ad.id %}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
+        <li><a href="{% url 'home:favourite_ad' id=ad.id %}"><i class="icon-heart"></i></a></li>
+    </ul>
+{% endif %}
+
+

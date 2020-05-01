@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <!-- START SECTION BREADCRUMB -->
+<div class="breadcrumb_section bg_gray page-title-mini">
+    <div class="container"><!-- STRART CONTAINER -->
+        <div class="row align-items-center">
+        	<div class="col-md-6">
+                <div class="page-title">
+            		<h1>Register</h1>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb justify-content-md-end">
+                    <li class="breadcrumb-item"><a href="{% url 'home:home' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Register</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- END CONTAINER-->
+</div>
+<!-- END SECTION BREADCRUMB -->
+
+<!-- START MAIN CONTENT -->
+<div class="main_content">
+
+<!-- START LOGIN SECTION -->
+<div class="login_register_wrap section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-md-10">
+                <div class="login_wrap">
+            		<div class="padding_eight_all bg-white">
+                        <div class="heading_s1">
+                            <h3 style="text-align:center;">Create an Account</h3>
+                        </div>
+                        <form method="post" action="{% url 'register' %}">
+                            {% csrf_token %}
+                                <div class="form-group">
+                                    {% bootstrap_field user_form.first_name %}
+                                </div>
+                                <div class="form-group">
+                                    {% bootstrap_field user_form.last_name %}
+                                </div>
+                                <div class="form-group">
+                                    {% bootstrap_field user_form.username %}
+                                </div>
+                                <div class="form-group">
+                                    {% bootstrap_field user_form.email %}
+                                </div>
+                                <div class="form-group">
+                                    {% bootstrap_field user_form.password %}
+                                </div>
+                                <div class="form-group">
+                                    {% bootstrap_field user_form.password2 %}
+                                </div>
+                                <div class="form-group">
+                                    {% bootstrap_field profile_form.phone %}
+                                </div>
+                                <div class="form-group">
+                                    {% bootstrap_field profile_form.address %}
+                                </div>
+                            <div class="login_footer form-group">
+                                <div class="chek-form">
+                                    <div class="custome-checkbox">
+                                        <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox2" value="">
+                                        <label class="form-check-label" for="exampleCheckbox2"><span>I agree to terms &amp; Policy.</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-fill-out btn-block" name="register">Register</button>
+                            </div>
+                        </form>
+                        <div class="different_login">
+                            <span> or</span>
+                        </div>
+                        <ul class="btn-login list_none text-center">
+                            <li><a href="#" class="btn btn-facebook"><i class="ion-social-facebook"></i>Facebook</a></li>
+                            <li><a href="#" class="btn btn-google"><i class="ion-social-googleplus"></i>Google</a></li>
+                        </ul>
+                        <div class="form-note text-center">Already have an account? <a href="{% url "login" %}">Log in</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END LOGIN SECTION -->
+
+<!-- START SECTION SUBSCRIBE NEWSLETTER -->
+{% include 'subscribe.html' %}
+<!-- START SECTION SUBSCRIBE NEWSLETTER -->
+</div>
+{% endblock %}

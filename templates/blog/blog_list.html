@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+{% load i18n %}
+{% load thumbnail %}
+{% load humanize %}
+
+{% block title %}Blog post{% endblock %}
+
+{% block content %}
+   <!-- START SECTION BREADCRUMB -->
+<div class="breadcrumb_section bg_gray page-title-mini">
+    <div class="container"><!-- STRART CONTAINER -->
+        <div class="row align-items-center">
+        	<div class="col-md-6">
+                <div class="page-title">
+            		<h1>Blog</h1>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb justify-content-md-end">
+                    <li class="breadcrumb-item"><a href="{% url 'home:home' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Blog </li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- END CONTAINER-->
+</div>
+<!-- END SECTION BREADCRUMB -->
+
+<!-- START MAIN CONTENT -->
+<div class="main_content">
+
+<!-- START SECTION BLOG -->
+<div class="section">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-lg-9">
+                <div class="row">
+                    {% for obj in object_list %}
+                    <div class="col-xl-4 col-md-6">
+                        <div class="blog_post blog_style2 box_shadow1">
+                            <div class="blog_img">
+                                <a href="{{ obj.get_absolute_url }}">
+                                    {% if obj.image %}
+                                        <img src="{{ obj.image.url }}" class="" width="255px" height="170px" alt="" />
+                                    {% endif%}
+                                </a>
+                            </div>
+                            <div class="blog_content bg-white">
+                                <div class="blog_text">
+                                    <h6 class="blog_title"><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></h6>
+                                    <ul class="list_none blog_meta">
+                                        <li><i class="ti-calendar"></i> {{ obj.publish }}</li>
+                                    </ul>
+                                    <p>{{ obj.content|linebreaks|truncatechars_html:50 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-2 mt-md-4">
+                        {% if object_list.has_other_pages %}
+                          <ul class="pagination pagination_style1 justify-content-center">
+                            {% if object_list.has_previous %}
+                              <li class="page-item"><a class="page-link" href="?page={{ object_list.previous_page_number }}"> <i class="linearicons-arrow-left"></i></a></li>
+                            {% else %}
+                              <li class="page-item disabled"><span>&laquo;</span></li>
+                            {% endif %}
+                            {% for i in object_list.paginator.page_range %}
+                              {% if object_list.number == i %}
+                                <li class="page-item"><a class="page-link active"><span>{{ i }} <span class="sr-only">(current)</span></span></a></li>
+                              {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                              {% endif %}
+                            {% endfor %}
+                            {% if object_list.has_next %}
+                              <li class="page-item"><a class="page-link" href="?page={{ object_list.next_page_number }}"> <i class="linearicons-arrow-right"></i></a></li>
+                            {% else %}
+                              <li class="page-item disabled"><span>&raquo;</span></li>
+                            {% endif %}
+                          </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% include 'blog/sidebar.html' with most_recent=most_recent category_count=category_count lates=lates %}
+
+        </div>
+    </div>
+</div>
+<!-- END SECTION BLOG -->
+
+<!-- START SECTION SUBSCRIBE NEWSLETTER -->
+{% include 'subscribe.html' %}
+<!-- START SECTION SUBSCRIBE NEWSLETTER -->
+
+</div>
+<!-- END MAIN CONTENT -->
+{% endblock %}

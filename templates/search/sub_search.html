@@ -1,0 +1,58 @@
+{% load static %}
+{% load bootstrap4 %}
+{% load i18n %}
+{% load thumbnail %}
+
+
+ <div class="col-lg-3 order-lg-first mt-4 pt-2 mt-lg-0 pt-lg-0">
+    <div class="sidebar">
+        <form method="GET" action="{% url 'product_search:product_filter' %}">
+            <input type="hidden" name="order" value="{{ request.GET.order.strip }}"/>
+            <input type="hidden" name="title_contains_query" value="{{ request.GET.title_contains_query.strip }}"/>
+
+            <div class="widget">
+                <h5 class="widget_title">Categories</h5>
+                    {% for category in categories %}
+                    <div class="widget_categories">
+
+                            <input type="radio" id="{{ category.name }}" {% if category.name == request.GET.category.strip %}checked{% endif %} name="category" value="{{ category.name }}">
+                            <label for="{{ category.name }}"><span class="categories_name">{{ category.name }}</span></label>
+
+                    </div>
+                    {% endfor %}
+            </div>
+            <div class="widget">
+                <h5 class="widget_title">Filter</h5>
+                <div class="filter_price">
+                     <div id="price-range"></div>
+                     <div class="price_range">
+                         <span>Price: <span id="flt_price"></span></span>
+{#                         <input type="text" id="price-amount" readonly>#}
+                         <input type="hidden" name="price_min" id="txtMin" value="{{ request.GET.price_min.strip }}"/>
+                         <input type="hidden" name="price_max" id="txtMax" value="{{ request.GET.price_max.strip }}"/>
+                     </div>
+                 </div>
+            </div>
+
+            <div class="widget">
+                <h5 class="widget_title">Size</h5>
+                <div class="product_size_switch">
+                    <span>xs</span>
+                    <span>s</span>
+                    <span>m</span>
+                    <span>l</span>
+                    <span>xl</span>
+                    <span>2xl</span>
+                    <span>3xl</span>
+                </div>
+            </div>
+
+            <div class="widget">
+                <button value="Submit" name="submit" class="btn btn-fill-out" title="Submit Your Message!" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

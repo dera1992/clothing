@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+{% load i18n %}
+{% load thumbnail %}
+
+{% block title %}Blog Detail{% endblock %}
+
+{% block content %}
+
+    <!-- START SECTION BREADCRUMB -->
+<div class="breadcrumb_section bg_gray page-title-mini">
+    <div class="container"><!-- STRART CONTAINER -->
+        <div class="row align-items-center">
+        	<div class="col-md-6">
+                <div class="page-title">
+            		<h1>Blog Detail</h1>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb justify-content-md-end">
+                    <li class="breadcrumb-item"><a href="{% url 'home:home' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'blog:list' %}">Blog</a></li>
+                    <li class="breadcrumb-item active">{{ instance.title }}</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- END CONTAINER-->
+</div>
+<!-- END SECTION BREADCRUMB -->
+
+<!-- START MAIN CONTENT -->
+<div class="main_content">
+
+<!-- START SECTION BLOG -->
+<div class="section">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-xl-9">
+            	<div class="single_post">
+                	<h2 class="blog_title">{{ instance.title }}</h2>
+                    <ul class="list_none blog_meta">
+                        <li><a href="#"><i class="ti-calendar"></i> {{ instance.publish }}</a></li>
+                        <li><i class="ti-comments"></i> {{ comments.count }} Comment{{ comments|pluralize }}</li>
+                    </ul>
+                    <div class="blog_img">
+                        {% if instance.image %}
+                            <img  src="{{ instance.image.url }}" alt="" width="825px" height="550px" class="">
+                         {% endif %}
+                    </div>
+                    <div class="blog_content">
+                        <div class="blog_text">
+                            <p> {{ instance.content|safe }}</p>
+
+                        	<div class="blog_post_footer">
+                                <div class="row justify-content-between align-items-center">
+                                    <div class="col-md-8 mb-3 mb-md-0">
+                                        <div class="tags">
+                                            <a href="#">{{ instance.content|safe }}</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul class="social_icons text-md-right">
+                                            <li><a href="#" class="sc_facebook"><i class="ion-social-facebook"></i></a></li>
+                                            <li><a href="#" class="sc_twitter"><i class="ion-social-twitter"></i></a></li>
+                                            <li><a href="#" class="sc_google"><i class="ion-social-googleplus"></i></a></li>
+                                            <li><a href="#" class="sc_youtube"><i class="ion-social-youtube-outline"></i></a></li>
+                                            <li><a href="#" class="sc_instagram"><i class="ion-social-instagram-outline"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div class="card post_author">
+                	<div class="card-body">
+                    	<div class="author_img">
+                        	<img src="{{ instance.profile.photo.url }}" alt="user1" width="100px" height="100px">
+                        </div>
+                        <div class="author_info">
+                        	<h6 class="author_name"><a class="mb-1 d-inline-block">{{ instance.profile.user.get_full_name }}</a></h6>
+                        	<p> {{ instance.profile.description }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {% include 'blog/comments.html' %}
+            </div>
+
+        	{% include 'blog/sidebar.html' with most_recent=most_recent category_count=category_count lates=lates %}
+
+        </div>
+    </div>
+</div>
+<!-- END SECTION BLOG -->
+
+<!-- START SECTION SUBSCRIBE NEWSLETTER -->
+{% include 'subscribe.html' %}
+<!-- START SECTION SUBSCRIBE NEWSLETTER -->
+
+</div>
+<!-- END MAIN CONTENT -->
+
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+{% load i18n %}
+{% load thumbnail %}
+{% load humanize %}
+
+{% block title %}Bookmarked property{% endblock %}
+
+{% block content %}
+    <!-- START SECTION BREADCRUMB -->
+<div class="breadcrumb_section bg_gray page-title-mini">
+    <div class="container"><!-- STRART CONTAINER -->
+        <div class="row align-items-center">
+        	<div class="col-md-6">
+                <div class="page-title">
+            		<h1>Shopping Cart</h1>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb justify-content-md-end">
+                    <li class="breadcrumb-item"><a href="{% url "home:home" %}">Home</a></li>
+                    <li class="breadcrumb-item active">Shopping Cart</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- END CONTAINER-->
+</div>
+<!-- END SECTION BREADCRUMB -->
+
+<!-- START MAIN CONTENT -->
+<div class="main_content">
+
+<!-- START SECTION SHOP -->
+<div class="section">
+	<div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive shop_cart_table">
+                	<table class="table">
+                    	<thead>
+                        	<tr>
+                            	<th class="product-thumbnail">&nbsp;</th>
+                                <th class="product-name">Product</th>
+                                <th class="product-price">Price</th>
+                                <th class="product-quantity">Quantity</th>
+                                <th class="product-subtotal">Total</th>
+                                <th class="product-remove">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for cart_item in cart.items.all %}
+                        	<tr>
+                            	<td class="product-thumbnail">
+                                    {% for images in cart_item.item.get_second_image %}
+                                        {% thumbnail images.product_image "120x120" crop="10px 10px"  as im %}
+                                        <a href="{{ cart_item.item.get_absolute_url }}">
+                                            <img   src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" class=""  />
+                                        </a>
+                                        {% endthumbnail %}
+                                    {% endfor %}
+                                </td>
+                                <td class="product-name" data-title="Product"><a href="{{ cart_item.get_absolute_url }}">{{cart_item.item.title}}</a></td>
+                                <td class="product-price" data-title="Price">₦{{ cart_item.item.price|intcomma}}</td>
+                                <td class="product-quantity" data-title="Quantity">
+                                    <div class="quantity">
+                                        <a href="{% url 'cart:remove_single_item_from_cart'  cart_item.item.slug %}"><i class="fa fa-minus"></i></a>
+                                             {{ cart_item.quantity }}
+                                        <a href="{% url 'cart:add_to_cart'  cart_item.item.slug %}"><i class="fa fa-plus ml-2"></i></a>
+                                    </div>
+                                </td>
+                              	<td class="product-subtotal" data-title="Total">
+                                    {% if cart_item.item.discount_price %}
+                                        <span>₦{{ cart_item.get_total_discount_item_price }}</span>
+                                        <span class="badge badge-primary">Saving ${{ cart_item.get_amount_saved }}</span>
+                                    {% else %}
+                                       <span> ₦{{ cart_item.get_total_item_price }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="product-remove" data-title="Remove"><a href="{% url 'cart:remove_from_cart' cart_item.item.slug %}"><i class="ti-close"></i></a></td>
+                            </tr>
+                        {% empty %}
+                             <tr>
+                                <td class="container-fluid " >
+                                    <h5 class="justify-content-center" style="text-align:center;"> You have no food in your cart <a class="btn btn-secondary " href="/">Shop Now</a></h5>
+                                </td>
+                             </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+            	<div class="medium_divider"></div>
+            	<div class="divider center_icon"><i class="ti-shopping-cart-full"></i></div>
+            	<div class="medium_divider"></div>
+            </div>
+        </div>
+        <div class="row">
+        	<div class="col-md-6">
+            	<div class="coupon field_form input-group">
+                    <input type="text" value="" class="form-control form-control-sm" placeholder="Enter Coupon Code..">
+                    <div class="input-group-append">
+                        <button class="btn btn-fill-out btn-sm" type="submit">Apply Coupon</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+            	<div class="border p-3 p-md-4">
+                    <div class="heading_s1 mb-3">
+                        <h6>Cart Totals</h6>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td class="cart_total_label">Cart Subtotal</td>
+                                    {% for cart_item in cart.items.all %}
+                                        <td class="cart_total_amount">₦{{ cart_item.get_final_price }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td class="cart_total_label">Shipping</td>
+                                    <td class="cart_total_amount">Free Shipping</td>
+                                </tr>
+                                <tr>
+                                    <td class="cart_total_label">Total</td>
+                                    <td class="cart_total_amount"><strong>₦{{ cart.get_total }}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="{% url 'order:checkout' %}" class="btn btn-fill-out">Proceed To CheckOut</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION SHOP -->
+
+<!-- START SECTION SUBSCRIBE NEWSLETTER -->
+{% include 'subscribe.html' %}
+<!-- START SECTION SUBSCRIBE NEWSLETTER -->
+
+</div>
+<!-- END MAIN CONTENT -->
+{% endblock %}
