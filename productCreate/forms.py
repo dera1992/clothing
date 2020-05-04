@@ -15,7 +15,7 @@ class AdsForm(forms.ModelForm):
 
     class Meta:
         model = Products
-        fields = ('title', 'category','subcategory','price','discount_price','description','label','status','available')
+        fields = ('title', 'category','subcategory','price','discount_price','description','label','status','available','size')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -51,7 +51,7 @@ class AdsEditForm(forms.ModelForm):
 
     class Meta:
         model = Products
-        fields = ('title', 'category','subcategory','price','discount_price','description','label','status','available')
+        fields = ('title', 'category','subcategory','price','discount_price','description','label','status','available','size')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

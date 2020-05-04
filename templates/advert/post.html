@@ -34,10 +34,22 @@
                   {% csrf_token %}
                     <div>
                       <div class="form-group">
-                        <div >
-                            {% bootstrap_field postForm.title %}
-{#                          <input type="email" class="form-control font-14"  placeholder="Name">#}
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12 mb-10">
+                              <div>
+                                  {% bootstrap_field postForm.title %}
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12 mb-10">
+                              <div >
+                                  {% bootstrap_field postForm.size %}
+                              </div>
+                            </div>
                         </div>
+{#                        <div >#}
+{#                            {% bootstrap_field postForm.title %}#}
+{#                          <input type="email" class="form-control font-14"  placeholder="Name">#}
+{#                        </div>#}
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -117,7 +129,7 @@
                           <span class="font-14"></span> </div>
                         <div class="col-md-6 col-sm-6 text-right">
                           <div class="5">
-                            <button type="submit" class="btn btn-rounded waves-effect waves-light bg-green font-14 text-white">Save</button>
+                            <button type="submit" class="btn btn-rounded waves-effect waves-light btn-outline-success font-14">Save</button>
                             <button type="button" class="btn btn-rounded waves-effect waves-light btn-outline-default font-14"><a href="{% url 'home:home' %}">Cancel</a></button>
                           </div>
                         </div>

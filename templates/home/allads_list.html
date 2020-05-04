@@ -59,7 +59,7 @@
                      <td>₦{{ ad.price|intcomma}}</td>
                      <td>25</td>
                      <td>{{ ad.get_status_display }}</td>
-                     <td class="text-center"><a href="{% url 'foodcreate:edit_post' pk=ad.pk %}"><i class="fa fa-pencil"></i></a></td>
+                     <td class="text-center"><a href="{% url 'productcreate:edit_post' pk=ad.pk %}"><i class="fa fa-pencil"></i></a></td>
                          <td class="text-center"><a href="{% url 'owner:delete_post' pk=ad.pk %}"><i class="fa fa-trash text-danger"></i></a></td>
                   </tr>
                 {% endfor %}

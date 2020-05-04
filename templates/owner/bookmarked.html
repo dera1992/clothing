@@ -43,7 +43,8 @@
                             	<th class="product-thumbnail">Image</th>
                                 <th class="product-name">Product</th>
                                 <th class="product-price">Price</th>
-                                <th class="product-add-to-cart">Total</th>
+                                <th class="product-stock-status">Stock Status</th>
+                                <th class="product-add-to-cart"></th>
                                 <th class="product-remove">Remove</th>
                             </tr>
                         </thead>
@@ -61,6 +62,7 @@
                                 </td>
                                 <td class="product-name" data-title="Product"><a href="{{ p.get_absolute_url }}">{{p.title}}</a></td>
                                 <td class="product-price" data-title="Price">₦{{ p.price|intcomma}}</td>
+                                <td class="product-stock-status" data-title="Stock Status"><span class="badge badge-pill badge-success">{{p.status}}</span></td>
                                 <td class="product-add-to-cart">
                                     {% if request.user.is_authenticated %}
                                         {% csrf_token %}

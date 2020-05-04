@@ -63,7 +63,7 @@
                                 <td class="product-name" data-title="Product"><a href="{{ cart_item.get_absolute_url }}">{{cart_item.item.title}}</a></td>
                                 <td class="product-price" data-title="Price">₦{{ cart_item.item.price|intcomma}}</td>
                                 <td class="product-quantity" data-title="Quantity">
-                                    <div class="quantity">
+                                    <div class="quantity" style="text-align: center">
                                         <a href="{% url 'cart:remove_single_item_from_cart'  cart_item.item.slug %}"><i class="fa fa-minus"></i></a>
                                              {{ cart_item.quantity }}
                                         <a href="{% url 'cart:add_to_cart'  cart_item.item.slug %}"><i class="fa fa-plus ml-2"></i></a>
@@ -72,7 +72,7 @@
                               	<td class="product-subtotal" data-title="Total">
                                     {% if cart_item.item.discount_price %}
                                         <span>₦{{ cart_item.get_total_discount_item_price }}</span>
-                                        <span class="badge badge-primary">Saving ${{ cart_item.get_amount_saved }}</span>
+                                        <span class="badge badge-primary">Saving ₦{{ cart_item.get_amount_saved }}</span>
                                     {% else %}
                                        <span> ₦{{ cart_item.get_total_item_price }}</span>
                                     {% endif %}

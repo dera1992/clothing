@@ -90,6 +90,7 @@ def ads_list(request, category_slug=None):
                                               'queryset': qs,'is_favourite': is_favourite,'order': order,'page': page})
 
 # admin ad list
+@login_required
 def allads_list(request, category_slug=None):
     category = None
     ad_list = Products.objects.all().order_by('-created', '?')
@@ -199,8 +200,9 @@ def delete_post(request,pk=None):
         raise Http404()
     ad.delete()
     messages.success(request, "You property has been successfuly deleted")
-    return redirect('home:my_aids')
+    return redirect('home:allads_list')
 
+@login_required
 def customer_list(request):
     customers_list = Profile.objects.all()
     query = request.GET.get('q')

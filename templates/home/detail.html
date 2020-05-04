@@ -43,24 +43,28 @@
 		<div class="row">
             <div class="col-lg-6 col-md-6 mb-4 mb-md-0">
               <div class="product-image">
-                  {% for adv in adsimage %}
-                      {% if adv.product_image %}
+
+                   {% for adv in ad.get_second_image %}
                         <div class="product_img_box">
-                            {% thumbnail adv.product_image "388x388" crop="10px 10px"  as im %}
-                                <img id="product_img" style="margin:{{ im|margin:"388x388" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" data-zoom-image="{{ im.url }}" alt="" />
+
+{#                         {% if adv.product_image %}#}
+                            {% thumbnail adv.product_image "540x550" crop="10px 10px"  as im %}
+                                <img id="product_img" style="margin:{{ im|margin:"540x550" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" data-zoom-image="{{ im.url }}" alt="" />
                             {% endthumbnail %}
                             <a href="{{adv.product_image.url}}" class="product_img_zoom" title="Zoom">
                                 <span class="linearicons-zoom-in"></span>
                             </a>
+{#                         {% endif %}#}
+
                         </div>
-                      {% endif %}
-                  {% endfor %}
-                    <div id="pr_item_gallery" class="product_gallery_item slick_slider" data-slides-to-show="4" data-slides-to-scroll="1" data-infinite="false">
+                   {% endfor %}
+
+                    <div id="pr_item_gallery" class="product_gallery_item slick_slider" data-slides-to-show="4" data-slides-to-scroll="1">
                         {% for adv2 in adsimage %}
                             <div class="item">
-                                <a href="#" class="product_gallery_item active" data-image="assets/images/product_img1.jpg" data-zoom-image="assets/images/product_zoom_img1.jpg">
-                                   {% thumbnail adv2.product_image "98x98" crop="center"  as im %}
-                                      <img  style="margin:{{ im|margin:"98x98" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" class="img-fluid" alt="Alt">
+                                <a href="#" class="product_gallery_item" data-image="{{adv2.product_image.url}}" data-zoom-image="{{adv2.product_image.url}}">
+                                   {% thumbnail adv2.product_image "128x135" crop="center"  as im %}
+                                      <img  style="margin:{{ im|margin:"128x135" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" class="img-fluid" alt="Alt">
                                    {% endthumbnail %}
                                  </a>
                             </div>
@@ -75,9 +79,9 @@
                         <div class="product_price">
                             {% if ad.discount_price %}
                               <span class="price">₦{{ ad.discount_price|intcomma}}</span>
-                              <del>₦{{ ad.discount_price|intcomma}}</del>
+                              <del>₦{{ ad.price|intcomma}}</del>
                              {% else %}
-                              <span class="price">₦{{ ad.discount_price|intcomma}}</span>
+                              <span class="price">₦{{ ad.price|intcomma}}</span>
                             {% endif %}
                         </div>
                         <div class="rating_wrap">
@@ -99,11 +103,9 @@
                         <div class="pr_switch_wrap">
                             <span class="switch_lable">Size</span>
                             <div class="product_size_switch">
-                                <span>xs</span>
-                                <span>s</span>
-                                <span>m</span>
-                                <span>l</span>
-                                <span>xl</span>
+                                {% for size in ad.size.all %}
+                                    <span>{{ size }}</span>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -112,9 +114,9 @@
                         <div class="cart_btn">
                             <button class="btn btn-fill-out btn-addtocart" type="button"><i class="icon-basket-loaded"></i> Add to cart</button>
                             {% if is_favourite %}
-                               <a href="{% url 'home:favourite_ad' id=ad.id %}" class="add_wishlist"> <i class="icon-heart"></i></a>
+                               <a href="{% url 'home:favourite_ad' id=ad.id %}" class="add_wishlist"> <i class="fas fa-heart" style="color:red"></i></a>
                             {% else %}
-                                 <a href="{% url 'home:favourite_ad' id=ad.id %}" class="add_wishlist"> <i class="icon-heart-alt"></i></a>
+                                 <a href="{% url 'home:favourite_ad' id=ad.id %}" class="add_wishlist"> <i class="icon-heart"></i></a>
                             {% endif %}
                         </div>
                     </div>
@@ -233,8 +235,8 @@
                             <div class="product_img">
                                 <a href="{{ similar.get_absolute_url }}">
                                     {% for image in similar.get_second_image %}
-                                        {% thumbnail image.product_image "268x200" crop="10px 10px"  as im %}
-                                            <img  style="margin:{{ im|margin:"268x200" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"/>
+                                        {% thumbnail image.product_image "255x283" crop="10px 10px"  as im %}
+                                            <img  style="margin:{{ im|margin:"255x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"/>
                                         {% endthumbnail %}
                                     {% endfor %}
                                 </a>
@@ -244,12 +246,12 @@
                                             {% csrf_token %}
                                              <ul class="list_none pr_action_btn">
                                                 <li class="add-to-cart"><a href="#" id = "cart" data-id="{{ similar.id }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
-                                                <li><a href="#" id = "wishlist" data-id="{{ similar.id }}"><i class="icon-heart"></i></a></li>
+                                                <li><a href="#" id = "wishlist" data-id="{{ similar.id }}"><i class="fas fa-heart" style="color:red"></i></a></li>
                                             </ul>
                                         {% else %}
                                             <ul class="list_none pr_action_btn">
                                                 <li class="add-to-cart"><a href="#" id = "cart" data-id="{{ similar.id }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
-                                                <li><a href="#" id = "wishlist" data-id="{{ similar.id }}"><i class="icon-heart-alt"></i></a></li>
+                                                <li><a href="#" id = "wishlist" data-id="{{ similar.id }}"><i class="icon-heart"></i></a></li>
                                             </ul>
                                         {% endif %}
                                     {% else %}

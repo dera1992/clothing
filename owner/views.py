@@ -49,7 +49,7 @@ def delete_post(request,pk=None):
         raise Http404()
     ad.is_active = False
     messages.success(request, "Successfuly deleted")
-    return redirect('owner:my_property')
+    return redirect('home:allads_list')
 
 
 @login_required
@@ -59,7 +59,7 @@ def hide_post(request,pk=None):
         raise Http404()
     ad.is_active = False
     messages.success(request, "You property has been successfuly deleted")
-    return redirect('owner:my_property')
+    return redirect('home:allads_list')
 
 def create_contact(request):
     if request.POST:

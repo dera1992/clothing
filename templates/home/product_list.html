@@ -61,16 +61,12 @@
                                 <div class="product_header_right">
                                     <div class="products_view">
                                         <a href="javascript:Void(0);" class="shorting_icon grid active"><i class="ti-view-grid"></i></a>
-                                        <a href="javascript:Void(0);" class="shorting_icon list"><i class="ti-layout-list-thumb"></i></a>
                                     </div>
-                                    <div class="custom_select">
-                                        <select class="form-control form-control-sm">
-                                            <option value="">Showing</option>
-                                            <option value="9">9</option>
-                                            <option value="12">12</option>
-                                            <option value="18">18</option>
-                                        </select>
-                                    </div>
+{#                                    <div class="products_view">#}
+{#                                        {% with total_property=ads|length %}#}
+{#                                            <p class="result-show-message">Showing {{ total_property }} result{{ total_property|pluralize }}</p>#}
+{#                                        {% endwith %}#}
+{#                                    </div>#}
                                 </div>
                             </div>
                         </div>
@@ -83,9 +79,9 @@
                                         <a href="{{ ad.get_absolute_url }}">
                                             <span class="{{ ad.get_label_display }}">{{ ad.status }}</span>
                                             {% for images in ad.get_second_image %}
-                                                {% thumbnail images.product_image "306x280" crop="10px 10px"  as im %}
+                                                {% thumbnail images.product_image "255x283" crop="10px 10px"  as im %}
                                                     <a href="{{ ad.get_absolute_url }}">
-                                                        <img  style="margin:{{ im|margin:"306x280" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" class="" alt="" />
+                                                        <img  style="margin:{{ im|margin:"255x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" class="" alt="" />
                                                     </a>
                                                 {% endthumbnail %}
                                             {% endfor %}
@@ -99,9 +95,9 @@
                                         <div class="product_price">
                                              {% if ad.discount_price %}
                                                 <span class="price">₦{{ ad.discount_price|intcomma}}</span>
-                                                <del>₦{{ ad.discount_price|intcomma}}</del>
+                                                <del>₦{{ ad.price|intcomma}}</del>
                                              {% else %}
-                                                <span class="price">₦{{ ad.discount_price|intcomma}}</span>
+                                                <span class="price">₦{{ ad.price|intcomma}}</span>
                                             {% endif %}
                                         </div>
                                         <div class="rating_wrap">

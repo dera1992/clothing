@@ -27,6 +27,14 @@ class SubCategory(models.Model):
     def __str__(self):
         return self.name
 
+class ProductSize(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+
 class Products(models.Model):
     LABEL_CHOICES = (
         ('N', 'new'),
@@ -39,6 +47,13 @@ class Products(models.Model):
         ('new', 'New'),
         ('hot', 'Hot'),
         ('unavailable', 'Unavailable'),)
+
+
+    # LABEL_CHOICES = (
+    #     ('P', 'primary'),
+    #     ('S', 'secondary'),
+    #     ('D', 'danger')
+    # )
 
     profile = models.ForeignKey(Profile,
                                 on_delete=models.CASCADE)
@@ -60,6 +75,7 @@ class Products(models.Model):
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
                                         related_query_name='hit_count_generic_relation')
     favourite = models.ManyToManyField(User, related_name='favourite', blank=True)
+    size = models.ManyToManyField(ProductSize, related_name='size', blank=True)
     available = models.BooleanField(default=True,blank=True)
     active = models.BooleanField(default=True,blank=True)
 

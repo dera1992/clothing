@@ -92,8 +92,8 @@
                                         <div class="product_img">
                                             <a href="{{ ad.get_absolute_url }}">
                                                 {% for images in ad.get_second_image %}
-                                                    {% thumbnail images.product_image "260x194" crop="10px 10px"  as im %}
-                                                            <img  style="margin:{{ im|margin:"260x194" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"  />
+                                                    {% thumbnail images.product_image "255x283" crop="10px 10px"  as im %}
+                                                            <img  style="margin:{{ im|margin:"255x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"  />
                                                     {% endthumbnail %}
                                                 {% endfor %}
                                             </a>
@@ -106,9 +106,9 @@
                                             <div class="product_price">
                                                 {% if ad.discount_price %}
                                                     <span class="price">₦{{ ad.discount_price|intcomma}}</span>
-                                                    <del>₦{{ ad.discount_price|intcomma}}</del>
+                                                    <del>₦{{ ad.price|intcomma}}</del>
                                                  {% else %}
-                                                    <span class="price">₦{{ ad.discount_price|intcomma}}</span>
+                                                    <span class="price">₦{{ ad.price|intcomma}}</span>
                                                 {% endif %}
                                             </div>
                                             <div class="rating_wrap">
@@ -168,16 +168,16 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-            	<div class="product_slider carousel_slider owl-carousel owl-theme nav_style1" data-loop="true" data-dots="false" data-nav="true" data-margin="20" data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "1199":{"items": "4"}}'>
+            	<div class="product_slider carousel_slider owl-carousel owl-theme nav_style1"  data-dots="false" data-nav="true" data-margin="20" data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "1199":{"items": "4"}}'>
                 	{% for latest in latests %}
                     <div class="item">
                         <div class="product">
-                            <span class="{{ ad.get_label_display }}">{{ ad.status }}</span>
+                            <span class="{{ latest.get_label_display }}">{{ latest.status }}</span>
                             <div class="product_img">
                                 <a href="{{ latest.get_absolute_url }}">
-                                    {% for images in ad.get_second_image %}
-                                        {% thumbnail images.product_image "260x194" crop="10px 10px"  as im %}
-                                                <img  style="margin:{{ im|margin:"260x194" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"  />
+                                    {% for images in latest.get_second_image %}
+                                        {% thumbnail images.product_image "255x283" crop="10px 10px"  as im %}
+                                                <img  style="margin:{{ im|margin:"255x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"  />
                                         {% endthumbnail %}
                                     {% endfor %}
                                 </a>
@@ -187,12 +187,12 @@
                                             {% csrf_token %}
                                              <ul class="list_none pr_action_btn">
                                                 <li class="add-to-cart"><a href="#" id = "cart" data-id="{{ latest.id }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
-                                                <li><a href="#" id = "wishlist" data-id="{{ latest.id }}"><i class="icon-heart"></i></a></li>
+                                                <li><a href="#" id = "wishlist" data-id="{{ latest.id }}"><i class="fas fa-heart" style="color:red"></i></a></li>
                                             </ul>
                                         {% else %}
                                             <ul class="list_none pr_action_btn">
                                                 <li class="add-to-cart"><a href="#" id = "cart" data-id="{{ latest.id }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
-                                                <li><a href="#" id = "wishlist" data-id="{{ latest.id }}"><i class="icon-heart-alt"></i></a></li>
+                                                <li><a href="#" id = "wishlist" data-id="{{ latest.id }}"><i class="icon-heart"></i></a></li>
                                             </ul>
                                         {% endif %}
                                     {% else %}
@@ -208,9 +208,9 @@
                                 <div class="product_price">
                                     {% if latest.discount_price %}
                                         <span class="price">₦{{ latest.discount_price|intcomma}}</span>
-                                        <del>₦{{ latest.discount_price|intcomma}}</del>
+                                        <del>₦{{ latest.price|intcomma}}</del>
                                      {% else %}
-                                        <span class="price">₦{{ latest.discount_price|intcomma}}</span>
+                                        <span class="price">₦{{ latest.price|intcomma}}</span>
                                     {% endif %}
                                 </div>
                                 <div class="rating_wrap">

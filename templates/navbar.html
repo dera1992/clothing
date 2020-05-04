@@ -64,7 +64,7 @@
                          {% endif %}
 {#                        <a> {{ request.user.get_full_name }}</a>#}
 {#                        <a class="dropdown-toggle nav-link" data-toggle="dropdown"> {{ request.user.get_full_name }} </a>#}
-                        <div class="cart_box dropdown-menu">
+                        <div class=" dropdown-menu">
                             <ul>
                                 {% if user.is_superuser %}
                                 <li class="dropdown-item "><a href="{% url "home:dashboard" %}">Dashboard</a></li>

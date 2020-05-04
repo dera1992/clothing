@@ -4,12 +4,12 @@
         {% csrf_token %}
         <ul class="list_none pr_action_btn">
             <li class="add-to-cart"><a href="#" id = "cart" data-id="{{ ad.id }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
-            <li><a href="#" id = "wishlist" data-id="{{ ad.id }}"><i class="icon-heart"></i></a></li>
+            <li><a href="#" id = "wishlist" data-id="{{ ad.id }}"><i class="fas fa-heart" style="color:red"></i></a></li>
         </ul>
     {% else %}
         <ul class="list_none pr_action_btn">
             <li class="add-to-cart"><a href="#" id = "cart" data-id="{{ ad.id }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
-            <li><a href="#" id = "wishlist" data-id="{{ ad.id }}"><i class="icon-heart-alt"></i></a></li>
+            <li><a href="#" id = "wishlist" data-id="{{ ad.id }}"><i class="icon-heart"></i></a></li>
         </ul>
     {% endif %}
 {% else %}
