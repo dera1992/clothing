@@ -10,158 +10,167 @@
 {% block title %}Your search{% endblock %}
 
 {% block content %}
-     <div class="breadcrumb-area mb-50">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="breadcrumb-container">
-						<ul>
-                            {% if not category %}
-                                <li><a href="{% url "home:home" %}"><i class="fa fa-home"></i> Home</a></li>
-                                <li class="active">Food List</li>
-                            {% else %}
-                                <li><a href="{% url "home:home" %}"><i class="fa fa-home"></i> Home</a></li>
-                                <li><a href="{% url "home:ads_list" %}">Food List</a></li>
-							    <li class="active">{{ category.name }}</li>
-                            {% endif %}
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!-- START SECTION BREADCRUMB -->
+    <div class="breadcrumb_section bg_gray page-title-mini">
+        <div class="container"><!-- STRART CONTAINER -->
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="page-title">
+                        <h1>Shop</h1>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <ol class="breadcrumb justify-content-md-end">
+                        {% if not category %}
+                            <li class="breadcrumb-item"><a href="{% url "home:home" %}">Home</a></li>
+                            <li class="breadcrumb-item">Shop list</li>
+                        {% else %}
+                            <li class="breadcrumb-item"><a href="{% url "home:home" %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url "home:ads_list" %}">Shop list</a></li>
+                            <li class="breadcrumb-item active">{{ category.name }}</li>
+                        {% endif %}
+                    </ol>
+                </div>
+            </div>
+        </div><!-- END CONTAINER-->
+    </div>
+    <!-- END SECTION BREADCRUMB -->
 
-    <div class="shop-page-container mb-50">
-		<div class="container">
-			<div class="row">
+    <!-- START MAIN CONTENT -->
+    <div class="main_content">
 
-                {% include 'search/sub_search.html' %}
-
-				<div class="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
-
-					<!--=======  Shop header  =======-->
-
-					<div class="shop-header mb-35">
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-sm-12 d-flex flex-column flex-sm-row justify-content-between align-items-left align-items-sm-center">
-								<!--=======  Sort by dropdown  =======-->
-
-                                <div class="dropdown">
-                                  <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Sort By
-                                  </button>
-                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href={{ request.build_absolute_uri }}{% relative_url '-created_date' 'order' params %}>Latest Items</a>
-                                    <a class="dropdown-item" href={{ request.build_absolute_uri }}{% relative_url '-price' 'order' params %}>High - Low Price</a>
-                                    <a class="dropdown-item" href={{ request.build_absolute_uri }}{% relative_url 'price' 'order' params %}>Low - High Price</a>
-                                  </div>
+    <!-- START SECTION SHOP -->
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="row align-items-center mb-4 pb-1">
+                        <div class="col-12">
+                            <div class="product_header">
+                                <div class="product_header_left">
+{#                                    <div class="dropdown">#}
+{#                                      <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+{#                                        Sort By#}
+{#                                      </button>#}
+{#                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">#}
+{#                                        <a class="dropdown-item" href={{ request.build_absolute_uri }}{% relative_url '-created_date' 'order' params %}>Latest Items</a>#}
+{#                                        <a class="dropdown-item" href={{ request.build_absolute_uri }}{% relative_url '-price' 'order' params %}>High - Low Price</a>#}
+{#                                        <a class="dropdown-item" href={{ request.build_absolute_uri }}{% relative_url 'price' 'order' params %}>Low - High Price</a>#}
+{#                                      </div>#}
+{#                                    </div>#}
+                                    <div class="custom_select">
+                                        <select class="form-control form-control-sm">
+                                            <option value="order">Default sorting</option>
+                                            <option value="popularity">Sort by popularity</option>
+                                            <option value="date">Sort by newness</option>
+                                            <option value="price">Sort by price: low to high</option>
+                                            <option value="price-desc">Sort by price: high to low</option>
+                                        </select>
+                                    </div>
                                 </div>
-								<!--=======  End of Sort by dropdown  =======-->
-                                {% with total_property=queryset|length %}
-								<p class="result-show-message">Showing {{ total_property }} result{{ total_property|pluralize }}</p>
-                                {% endwith %}
-							</div>
-						</div>
-					</div>
-
-					<!--=======  End of Shop header  =======-->
-
-					<!--=======  Grid list view  =======-->
-
-					<div class="shop-product-wrap list row no-gutters mb-35">
-
-						<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                            {% for ad in queryset %}
-								<div class="gf-product shop-list-view-product">
-									<div class="image">
-										<a href="{{ ad.get_absolute_url }}">
-											<span class="{{ ad.get_label_display }}">{{ ad.status }}</span>
+                                <div class="product_header_right">
+                                    <div class="products_view">
+                                        <a href="javascript:Void(0);" class="shorting_icon grid active"><i class="ti-view-grid"></i></a>
+                                    </div>
+{#                                    <div class="products_view">#}
+{#                                        {% with total_property=ads|length %}#}
+{#                                            <p class="result-show-message">Showing {{ total_property }} result{{ total_property|pluralize }}</p>#}
+{#                                        {% endwith %}#}
+{#                                    </div>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row shop_container">
+                        <div class="col-md-4 col-6">
+                            {% for ad in ads %}
+                                <div class="product">
+                                    <div class="product_img">
+                                        <a href="{{ ad.get_absolute_url }}">
+                                            <span class="{{ ad.get_label_display }}">{{ ad.status }}</span>
                                             {% for images in ad.get_second_image %}
-                                                {% thumbnail images.product_image "306x280" crop="10px 10px"  as im %}
+                                                {% thumbnail images.product_image "255x283" crop="10px 10px"  as im %}
                                                     <a href="{{ ad.get_absolute_url }}">
-                                                        <img  style="margin:{{ im|margin:"306x280" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" class="" alt="" />
+                                                        <img  style="margin:{{ im|margin:"255x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" class="" alt="" />
                                                     </a>
                                                 {% endthumbnail %}
                                             {% endfor %}
-										</a>
-									</div>
-									<div class="product-content">
-										<div class="product-categories">
-											<a>{{ ad.category }}</a>
-										</div>
-										<h3 class="product-title"><a href="{{ ad.get_absolute_url }}">{{ ad.title }}</a></h3>
-										<div class="price-box mb-20">
-											 {% if ad.discount_price %}
-                                              <span class="discounted-price">₦{{ ad.discount_price|intcomma}}</span>
-                                              <span class="main-price">₦{{ ad.discount_price|intcomma}}</span>
+                                        </a>
+                                        <div class="product_action_box" id = "part{{ ad.id }}">
+                                            {% include 'home/special_section.html' %}
+                                        </div>
+                                    </div>
+                                    <div class="product_info">
+                                        <h6 class="product_title"><a href="{{ ad.get_absolute_url }}">{{ ad.title }}</a></h6>
+                                        <div class="product_price">
+                                             {% if ad.discount_price %}
+                                                <span class="price">₦{{ ad.discount_price|intcomma}}</span>
+                                                <del>₦{{ ad.price|intcomma}}</del>
                                              {% else %}
-                                              <span class="discounted-price">₦{{ ad.price|intcomma}}</span>
+                                                <span class="price">₦{{ ad.price|intcomma}}</span>
                                             {% endif %}
-										</div>
-										<p class="product-description"> {{ ad.description }}</p>
-										<div class="list-product-icons" id = "part{{ ad.id }}">
-											{% include 'home/special_section.html' %}
-										</div>
-									</div>
+                                        </div>
+                                        <div class="rating_wrap">
+                                            <div class="rating">
+                                                <div class="product_rate" style="width:80%"></div>
+                                            </div>
+                                            <span class="rating_num">(21)</span>
+                                        </div>
 
-								</div>
-                            {% empty %}
-                                <div class="container-fluid">
-                                    <h3 style="text-align:center;">No search found </h3>
+
+                                        <div class="list_product_action_box">
+                                            <ul class="list_none pr_action_btn" id = "part{{ ad.id }}">
+                                                {% include 'home/special_section.html' %}
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             {% endfor %}
-							<!--=======  End of Shop list view product  =======-->
                         </div>
-					</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            {% if queryset.has_other_pages %}
+                              <ul class="pagination mt-3 justify-content-center pagination_style1">
+                                {% if queryset.has_previous %}
+                                  <li><a href="?page={{ queryset.previous_page_number }}" class="page-link"> <i class="linearicons-arrow-left"></i></a></li>
+                                {% else %}
+                                  <li class="disabled"><span>&laquo;</span></li>
+                                {% endif %}
+                                {% for i in queryset.paginator.page_range %}
+                                  {% if queryset.number == i %}
+                                    <li><a class="page-link active"><span>{{ i }}<span class="sr-only">(current)</span></span></a></li>
+                                  {% else %}
+        {#                                    <li><a href="?page={{ i }}">{{ i }}</a></li>#}
+                                    <li><a href={% relative_url i 'page' request.GET.urlencode %}>{{ i }}</a></li>
+                                  {% endif %}
+                                {% endfor %}
+                                {% if queryset.has_next %}
+                                  <li><a href="?page={{ queryset.next_page_number }}" class="page-link"><i class="linearicons-arrow-right"></i></a></li>
+                                {% else %}
+                                  <li class="disabled"><span>&raquo;</span></li>
+                                {% endif %}
+                              </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
 
-					<!--=======  End of Grid list view  =======-->
+               {% include 'search/sub_search.html' %}
 
-					<!--=======  Pagination container  =======-->
+            </div>
+        </div>
+    </div>
+    <!-- END SECTION SHOP -->
 
-					<div class="pagination-container">
-						<div class="container">
-							<div class="row">
-								<div class="col-lg-12">
-									<!--=======  pagination-content  =======-->
+    <!-- START SECTION SUBSCRIBE NEWSLETTER -->
+    {% include 'subscribe.html' %}
+    <!-- START SECTION SUBSCRIBE NEWSLETTER -->
 
-									<div class="pagination-content text-center">
-                                        {% if queryset.has_other_pages %}
-                                          <ul class="">
-                                            {% if queryset.has_previous %}
-                                              <li><a href="?page={{ queryset.previous_page_number }}"><i class="fa fa-angle-left"></i></a></li>
-                                            {% else %}
-                                              <li class="disabled"><span>&laquo;</span></li>
-                                            {% endif %}
-                                            {% for i in queryset.paginator.page_range %}
-                                              {% if queryset.number == i %}
-                                                <li><a class="page-link active"><span>{{ i }}<span class="sr-only">(current)</span></span></a></li>
-                                              {% else %}
-                    {#                                    <li><a href="?page={{ i }}">{{ i }}</a></li>#}
-                                                <li><a href={% relative_url i 'page' request.GET.urlencode %}>{{ i }}</a></li>
-                                              {% endif %}
-                                            {% endfor %}
-                                            {% if queryset.has_next %}
-                                              <li><a href="?page={{ queryset.next_page_number }}"><i class="fa fa-angle-right"></i></a></li>
-                                            {% else %}
-                                              <li class="disabled"><span>&raquo;</span></li>
-                                            {% endif %}
-                                          </ul>
-                                        {% endif %}
-									</div>
-
-									<!--=======  End of pagination-content  =======-->
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!--=======  End of Pagination container  =======-->
-
-				</div>
-			</div>
-		</div>
-	</div>
+    </div>
+    <!-- END MAIN CONTENT -->
 {% endblock %}
+
 {% block script %}
     <script src="{% static 'assets/js/ads.js' %}" type="text/javascript"></script>
 {% endblock %}
