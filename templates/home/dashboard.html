@@ -36,8 +36,8 @@
             <div class="card-body">
               <div class="d-flex pa-10 no-block">
                 <div class="align-slef-center ">
-                  <h2 class="counter text-themecolor"><span class="counter-count">14</span></h2>
-                  <h6 class="text-muted mb-0 text-uppercase">Pending Orders</h6>
+                  <h2 class="counter text-themecolor"><span class="counter-count">{{ ads.count }}</span></h2>
+                  <h6 class="text-muted mb-0 text-uppercase">Total products</h6>
                 </div>
                 <div class="align-self-center display-6 ml-auto text-themecolor"><i class="icon-Over-Time"></i> </div>
               </div>
@@ -51,8 +51,8 @@
             <div class="card-body">
               <div class="d-flex pa-10 no-block">
                 <div class="align-slef-center ">
-                  <h2 class="counter text-themecolor"><span class="counter-count">24 </span></h2>
-                  <h6 class="text-muted mb-0 text-uppercase">Completed Orders</h6>
+                  <h2 class="counter text-themecolor"><span class="counter-count">{{ users.count }}</span></h2>
+                  <h6 class="text-muted mb-0 text-uppercase">Users</h6>
                 </div>
                 <div class="align-self-center display-6 ml-auto text-themecolor"><i class="icon-Big-Data"></i></div>
               </div>
@@ -66,8 +66,8 @@
             <div class="card-body">
               <div class="d-flex pa-10 no-block">
                 <div class="align-slef-center ">
-                  <h2 class="counter text-themecolor"><span class="counter-count">50</span></h2>
-                  <h6 class="text-muted mb-0 text-uppercase">Refund Requests</h6>
+                  <h2 class="counter text-themecolor"><span class="counter-count">{{ order.count }}</span></h2>
+                  <h6 class="text-muted mb-0 text-uppercase">Orders</h6>
                 </div>
                 <div class="align-self-center display-6 ml-auto text-themecolor"><i class="icon-Arrow-Refresh"></i></div>
               </div>
@@ -81,8 +81,8 @@
             <div class="card-body">
               <div class="d-flex pa-10 no-block">
                 <div class="align-slef-center ">
-                  <h2 class="counter text-themecolor"><span class="counter-count">12</span></h2>
-                  <h6 class="text-muted mb-0 text-uppercase">New Comments</h6>
+                  <h2 class="counter text-themecolor"><span class="counter-count">{{ blog.count }}</span></h2>
+                  <h6 class="text-muted mb-0 text-uppercase">Blogs</h6>
                 </div>
                 <div class="align-self-center display-6 ml-auto text-themecolor"><i class="ti-shopping-cart-full"></i></div>
               </div>
@@ -93,8 +93,10 @@
         <div class="col-lg-6 col-md-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title m-b-0 align-self-center"> Sales Chart </h5>
-              <div id="morris-bar-chart"></div>
+                <div id="container" style="width: 100%;">
+                    <canvas id="category-chart" data-url="{% url 'home:category_chart' %}"></canvas>
+                 </div>
+{#              <div id="morris-bar-chart"></div>#}
             </div>
           </div>
         </div>

@@ -124,7 +124,7 @@ class PaymentView(View):
 
 @login_required
 def order_owner(request):
-    order_list = OrderItem.objects.filter(order__profile__user=request.user)
+    order_list = Order.objects.filter(user=request.user)
     lates = Products.objects.all().order_by('-created_date')[:3]
     counts = Products.objects.all().values('category__name').annotate(total=Count('category'))
 
@@ -145,7 +145,7 @@ def order_owner(request):
 
 @login_required
 def order_all(request):
-    order_list = OrderItem.objects.all()
+    order_list = Order.objects.all()
     lates = Products.objects.all().order_by('-created_date')[:3]
     counts = Products.objects.all().values('category__name').annotate(total=Count('category'))
 

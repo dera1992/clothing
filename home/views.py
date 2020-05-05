@@ -27,8 +27,9 @@ from datetime import datetime
 from blog.models import Post
 from cart.forms import CartAddProductForm
 from django.views.decorators.http import require_POST
+from order.models import OrderItem, Order
 
-
+@login_required
 def dashboard(request, category_slug=None):
     category = None
     ads = Products.objects.all()
@@ -37,13 +38,30 @@ def dashboard(request, category_slug=None):
     users = User.objects.all()
     # visitor = Visitor.objects.filter(start_time=datetime.today())
     blog = Post.objects.all()
+    order = OrderItem.objects.all()
     counts = Products.objects.all().values('category__name').annotate(total=Count('category'))
 
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         ads = ads.filter(category=category)
     return render(request,'home/dashboard.html', {'category': category,'categories': categories,'ads': ads,'latests':latests,
-                                              'users':users,'blog':blog})
+                                              'users':users,'blog':blog,'order':order})
+
+
+def category_chart(request):
+    labels = []
+    data = []
+
+    queryset = Products.objects.values('category__name').annotate(category_total=Count('category'))
+    print(queryset)
+    for entry in queryset:
+        labels.append(entry['category__name'])
+        data.append(entry['category_total'])
+
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })
 
 
 
