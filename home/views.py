@@ -38,7 +38,7 @@ def dashboard(request, category_slug=None):
     users = User.objects.all()
     # visitor = Visitor.objects.filter(start_time=datetime.today())
     blog = Post.objects.all()
-    order = OrderItem.objects.all()
+    order = Order.objects.all()
     counts = Products.objects.all().values('category__name').annotate(total=Count('category'))
 
     if category_slug:
