@@ -8,7 +8,10 @@
     <div class="sidebar">
         <form method="GET" action="{% url 'product_search:product_filter' %}">
             <input type="hidden" name="order" value="{{ request.GET.order.strip }}"/>
-            <input type="hidden" name="title_contains_query" value="{{ request.GET.title_contains_query.strip }}"/>
+            <div class="widget">
+              <input type="text" name="title_contains_query" value="{{ request.GET.title_contains_query.strip }}"
+                     placeholder="Search" class="form-control"/>
+            </div>
 
             <div class="widget">
                 <h5 class="widget_title">Categories</h5>
@@ -48,7 +51,7 @@
             </div>
 
             <div class="widget">
-                <button value="Submit" name="submit" class="btn btn-fill-out" title="Submit Your Message!" type="submit">Submit</button>
+                <button class="btn btn-fill-out" title="Submit Your Message!" type="submit">Submit</button>
             </div>
         </form>
     </div>

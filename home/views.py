@@ -28,6 +28,9 @@ from blog.models import Post
 from cart.forms import CartAddProductForm
 from django.views.decorators.http import require_POST
 from order.models import OrderItem, Order
+from star_ratings.models import Rating
+from star_ratings.models import UserRating
+
 
 @login_required
 def dashboard(request, category_slug=None):
@@ -151,6 +154,12 @@ def ad_detail(request, id, slug):
     latests = Products.objects.filter(available=True).order_by('-created', '?')[:6]
     profile = Profile.objects.get(user=ad.profile.user)
     categories = Category.objects.all()
+    try:
+        rating = Rating.objects.get(object_id=ad.id)
+    except Rating.DoesNotExist:
+        pass
+    user_rating = UserRating.objects.filter(rating_id=ad.id)
+    print(user_rating)
     is_favourite = False
 
     if ad.favourite.filter(id=request.user.id).exists():
@@ -158,7 +167,8 @@ def ad_detail(request, id, slug):
     cart_product_form = CartAddProductForm()
     return render(request, 'home/detail.html', {'ad':ad,'adsimage':adsimage, 'ad_similar':ad_similar,
                                                'profile':profile,'latests':latests,'is_favourite': is_favourite,
-                                                'categories': categories,'cart_product_form': cart_product_form})
+                                                'categories': categories,'cart_product_form': cart_product_form,
+                                                'rating':rating, 'user_rating':user_rating})
 @login_required
 def ads_favourite_list(request):
     user = request.user

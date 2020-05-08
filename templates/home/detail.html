@@ -7,6 +7,7 @@
 {% load humanize %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
+{% load ratings %}
 
 
 {% block title %}Detail{% endblock %}
@@ -48,8 +49,8 @@
                         <div class="product_img_box">
 
 {#                         {% if adv.product_image %}#}
-                            {% thumbnail adv.product_image "540x550" crop="10px 10px"  as im %}
-                                <img id="product_img" style="margin:{{ im|margin:"540x550" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" data-zoom-image="{{ im.url }}" alt="" />
+                            {% thumbnail adv.product_image "540x540" crop="10px 10px"  as im %}
+                                <img id="product_img" style="margin:{{ im|margin:"540x540" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" data-zoom-image="{{ im.url }}" alt="" />
                             {% endthumbnail %}
                             <a href="{{adv.product_image.url}}" class="product_img_zoom" title="Zoom">
                                 <span class="linearicons-zoom-in"></span>
@@ -84,12 +85,16 @@
                               <span class="price">₦{{ ad.price|intcomma}}</span>
                             {% endif %}
                         </div>
-                        <div class="rating_wrap">
-                                <div class="rating">
-                                    <div class="product_rate" style="width:80%"></div>
-                                </div>
-                                <span class="rating_num">(21)</span>
-                            </div>
+                        <div class="rating_wrap" >
+
+                             <span><i class="fas fa-star" {% if rating.average > 0 %} style="color: orange"{% endif %}></i></span>
+                             <span><i class="fas fa-star" {% if rating.average > 1 %} style="color: orange"{% endif %}></i></span>
+                             <span><i class="fas fa-star" {% if rating.average > 2 %} style="color: orange"{% endif %}></i></span>
+                             <span><i class="fas fa-star" {% if rating.average > 3 %} style="color: orange"{% endif %}></i></span>
+                             <span><i class="fas fa-star" {% if rating.average > 4 %} style="color: orange"{% endif %}></i></span>
+
+                            <span class="rating_num">({{ rating.count }})</span>
+                        </div>
                         <div class="pr_desc">
                             <p>{{ ad.description.capitalize }}</p>
                         </div>
@@ -151,7 +156,7 @@
 							<a class="nav-link active" id="Description-tab" data-toggle="tab" href="#Description" role="tab" aria-controls="Description" aria-selected="true">Description</a>
                       	</li>
                       	<li class="nav-item">
-                        	<a class="nav-link" id="Reviews-tab" data-toggle="tab" href="#Reviews" role="tab" aria-controls="Reviews" aria-selected="false">Reviews (2)</a>
+                        	<a class="nav-link" id="Reviews-tab" data-toggle="tab" href="#Reviews" role="tab" aria-controls="Reviews" aria-selected="false">Reviews ({{ rating.count }})</a>
                       	</li>
                     </ul>
                 	<div class="tab-content shop_info_tab">
@@ -160,26 +165,29 @@
                       	</div>
                       	<div class="tab-pane fade" id="Reviews" role="tabpanel" aria-labelledby="Reviews-tab">
                         	<div class="comments">
-                            	<h5 class="product_tab_title">2 Review For <span>Blue Dress For Woman</span></h5>
+                            	<h5 class="product_tab_title">{{ rating.count }} Review For <span>{{ ad.title }}</span></h5>
                                 <ul class="list_none comment_list mt-4">
                                     <li>
-                                        <div class="comment_img">
-                                            <img src="assets/images/user1.jpg" alt="user1"/>
-                                        </div>
-                                        <div class="comment_block">
-                                            <div class="rating_wrap">
-                                                <div class="rating">
-                                                    <div class="product_rate" style="width:80%"></div>
+                                        {% for ur in user_rating.ad %}
+                                            <div class="comment_img">
+                                                <img src="assets/images/user1.jpg" alt="user1"/>
+                                            </div>
+                                            {{ ur.score }}
+                                            <div class="comment_block">
+                                                <div class="rating_wrap">
+                                                    <div class="rating">
+                                                        <div class="product_rate" style="width:80%"></div>
+                                                    </div>
+                                                </div>
+                                                <p class="customer_meta">
+                                                    <span class="review_author">Alea Brooks</span>
+                                                    <span class="comment-date">March 5, 2018</span>
+                                                </p>
+                                                <div class="description">
+                                                    <p>Lorem Ipsumin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate</p>
                                                 </div>
                                             </div>
-                                            <p class="customer_meta">
-                                                <span class="review_author">Alea Brooks</span>
-                                                <span class="comment-date">March 5, 2018</span>
-                                            </p>
-                                            <div class="description">
-                                                <p>Lorem Ipsumin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate</p>
-                                            </div>
-                                        </div>
+                                        {% endfor %}
                                     </li>
                                 </ul>
                         	</div>
@@ -188,26 +196,16 @@
                                 <form class="row mt-3">
                                     <div class="form-group col-12">
                                         <div class="star_rating">
-                                            <span data-value="1"><i class="far fa-star"></i></span>
-                                            <span data-value="2"><i class="far fa-star"></i></span>
-                                            <span data-value="3"><i class="far fa-star"></i></span>
-                                            <span data-value="4"><i class="far fa-star"></i></span>
-                                            <span data-value="5"><i class="far fa-star"></i></span>
+                                            {% ratings ad %}
                                         </div>
                                     </div>
-                                    <div class="form-group col-12">
-                                        <textarea required="required" placeholder="Your review *" class="form-control" name="message" rows="4"></textarea>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <input required="required" placeholder="Enter Name *" class="form-control" name="name" type="text">
-                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <input required="required" placeholder="Enter Email *" class="form-control" name="email" type="email">
-                                    </div>
-
-                                    <div class="form-group col-12">
-                                        <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Submit Review</button>
-                                    </div>
+{#                                    <div class="form-group col-12">#}
+{#                                        <textarea required="required" placeholder="Your review *" class="form-control" name="message" rows="4"></textarea>#}
+{#                                    </div>#}
+{##}
+{#                                    <div class="form-group col-12">#}
+{#                                        <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Submit Review</button>#}
+{#                                    </div>#}
                                 </form>
                             </div>
                       	</div>
@@ -271,12 +269,6 @@
                                      {% else %}
                                         <span class="price">₦{{ similar.discount_price|intcomma}}</span>
                                     {% endif %}
-                                </div>
-                                <div class="rating_wrap">
-                                    <div class="rating">
-                                        <div class="product_rate" style="width:80%"></div>
-                                    </div>
-                                    <span class="rating_num">(21)</span>
                                 </div>
                             </div>
                         </div>

@@ -48,24 +48,15 @@
                         <div class="col-12">
                             <div class="product_header">
                                 <div class="product_header_left">
-{#                                    <div class="dropdown">#}
-{#                                      <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#                                        Sort By#}
-{#                                      </button>#}
-{#                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">#}
-{#                                        <a class="dropdown-item" href={{ request.build_absolute_uri }}{% relative_url '-created_date' 'order' params %}>Latest Items</a>#}
-{#                                        <a class="dropdown-item" href={{ request.build_absolute_uri }}{% relative_url '-price' 'order' params %}>High - Low Price</a>#}
-{#                                        <a class="dropdown-item" href={{ request.build_absolute_uri }}{% relative_url 'price' 'order' params %}>Low - High Price</a>#}
-{#                                      </div>#}
-{#                                    </div>#}
-                                    <div class="custom_select">
-                                        <select class="form-control form-control-sm">
-                                            <option value="order">Default sorting</option>
-                                            <option value="popularity">Sort by popularity</option>
-                                            <option value="date">Sort by newness</option>
-                                            <option value="price">Sort by price: low to high</option>
-                                            <option value="price-desc">Sort by price: high to low</option>
-                                        </select>
+                                    <div class="dropdown ">
+                                      <button class="btn btn-default dropdown-toggle" style="border-color:red" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Sort By
+                                      </button>
+                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href={{ request.build_absolute_uri }}{% relative_url '-created_date' 'order' params %}>Latest Items</a>
+                                        <a class="dropdown-item" href={{ request.build_absolute_uri }}{% relative_url '-price' 'order' params %}>High - Low Price</a>
+                                        <a class="dropdown-item" href={{ request.build_absolute_uri }}{% relative_url 'price' 'order' params %}>Low - High Price</a>
+                                      </div>
                                     </div>
                                 </div>
                                 <div class="product_header_right">
@@ -83,7 +74,7 @@
                     </div>
                     <div class="row shop_container">
                         <div class="col-md-4 col-6">
-                            {% for ad in ads %}
+                            {% for ad in queryset %}
                                 <div class="product">
                                     <div class="product_img">
                                         <a href="{{ ad.get_absolute_url }}">
@@ -110,13 +101,6 @@
                                                 <span class="price">₦{{ ad.price|intcomma}}</span>
                                             {% endif %}
                                         </div>
-                                        <div class="rating_wrap">
-                                            <div class="rating">
-                                                <div class="product_rate" style="width:80%"></div>
-                                            </div>
-                                            <span class="rating_num">(21)</span>
-                                        </div>
-
 
                                         <div class="list_product_action_box">
                                             <ul class="list_none pr_action_btn" id = "part{{ ad.id }}">

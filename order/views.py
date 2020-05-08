@@ -15,6 +15,8 @@ from productCreate.models import Products, ProductsImages, Category, SubCategory
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 
+from datetime import datetime
+
 # import stripe
 # stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -128,6 +130,10 @@ def order_owner(request):
     lates = Products.objects.all().order_by('-created_date')[:3]
     counts = Products.objects.all().values('category__name').annotate(total=Count('category'))
 
+    today = datetime.date.today()
+
+    my_order = Order.objects.filter(user=request.user,created=today)
+
     paginator = Paginator(order_list, 6)  # Show 25 contacts per page
     page_request_var = "page"
     page = request.GET.get('page')
@@ -140,7 +146,8 @@ def order_owner(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         allorder = paginator.page(paginator.num_pages)
     return render(request, 'owner/order_list.html', {'allorder': allorder,'lates': lates,
-                                                 'counts': counts, 'page_request_var': page_request_var})
+                                                 'counts': counts, 'page_request_var': page_request_var,
+                                                 'my_order':my_order})
 
 
 @login_required
@@ -149,6 +156,13 @@ def order_all(request):
     lates = Products.objects.all().order_by('-created_date')[:3]
     counts = Products.objects.all().values('category__name').annotate(total=Count('category'))
 
+    today = datetime.date.today()
+
+    today_order = Order.objects.filter(created=today)
+    pending_order = Order.objects.filter(created=today)
+    delivered_order = Order.objects.filter(created=today)
+    paid_order = Order.objects.filter(paid=True,created=today)
+
     paginator = Paginator(order_list, 6)  # Show 25 contacts per page
     page_request_var = "page"
     page = request.GET.get('page')
@@ -161,7 +175,9 @@ def order_all(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         allorder = paginator.page(paginator.num_pages)
     return render(request, 'owner/order_list.html', {'allorder': allorder,'lates': lates,
-                                                 'counts': counts, 'page_request_var': page_request_var})
+                                                 'counts': counts, 'page_request_var': page_request_var,
+                                                 ' today_order': today_order,'paid_order':paid_order,
+                                                  'pending_order':pending_order,'delivered_order':delivered_order})
 
 
 def load_cities(request):

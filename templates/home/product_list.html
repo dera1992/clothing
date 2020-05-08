@@ -48,15 +48,25 @@
                         <div class="col-12">
                             <div class="product_header">
                                 <div class="product_header_left">
-                                    <div class="custom_select">
-                                        <select class="form-control form-control-sm">
-                                            <option value="order">Default sorting</option>
-                                            <option value="popularity">Sort by popularity</option>
-                                            <option value="date">Sort by newness</option>
-                                            <option value="price">Sort by price: low to high</option>
-                                            <option value="price-desc">Sort by price: high to low</option>
-                                        </select>
+                                    <div class="dropdown ">
+                                      <button class="btn btn-default dropdown-toggle" style="border-color:red" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Sort By
+                                      </button>
+                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="{% relatived_url '-created_date' 'order' params %}">Sort by latest items </a>
+                                        <a class="dropdown-item" href="{% relatived_url '-price' 'order' params %}">Sort by price: high to low</a>
+                                        <a class="dropdown-item" href="{% relatived_url 'price' 'order' params %}">Sort by price: low to high</a>
+                                      </div>
                                     </div>
+{#                                    <div class="custom_select">#}
+{#                                        <select class="form-control form-control-sm">#}
+{#                                            <option value="order">Default sorting</option>#}
+{#                                            <option value="popularity">Sort by popularity</option>#}
+{#                                            <option value="date">Sort by newness</option>#}
+{#                                            <option value="price">Sort by price: low to high</option>#}
+{#                                            <option value="price-desc">Sort by price: high to low</option>#}
+{#                                        </select>#}
+{#                                    </div>#}
                                 </div>
                                 <div class="product_header_right">
                                     <div class="products_view">
@@ -100,13 +110,6 @@
                                                 <span class="price">₦{{ ad.price|intcomma}}</span>
                                             {% endif %}
                                         </div>
-                                        <div class="rating_wrap">
-                                            <div class="rating">
-                                                <div class="product_rate" style="width:80%"></div>
-                                            </div>
-                                            <span class="rating_num">(21)</span>
-                                        </div>
-
 
                                         <div class="list_product_action_box">
                                             <ul class="list_none pr_action_btn" id = "part{{ ad.id }}">

@@ -75,7 +75,7 @@
                         <div class="chek-form">
                             <div class="custome-checkbox">
                                 <input {% if form.save_info.value %}checked{% endif %}  type="checkbox" id="id_save_info" name="save_info">
-                                <label class="form-check-label label_info" for="createaccount"><span>Save this information for the next transaction</span></label>
+                                <label for="createaccount"><span>Save this information for the next transaction</span></label>
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                     	<div class="chek-form">
                             <div class="custome-checkbox">
                                 <input {% if form.same_billing_address.value %}checked{% endif %} type="checkbox" id="id_same_billing_address" name="same_billing_address">
-                                <label class="form-check-label label_info" for="differentaddress"><span>Shipping address is the same as billing address</span></label>
+                                <label for="differentaddress"><span>Shipping address is the same as billing address</span></label>
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,11 @@
                                 <tr>
                                     {% for order_item in order.items.all %}
                                         <td>{{ order_item.item.title }} <span class="product-qty">x {{ order_item.quantity }}</span></td>
-                                        <td>₦{{ order_item.get_total_item_price }}</td>
+                                        {% if order_item.item.discount_price %}
+                                           <td>₦{{ order_item.get_total_discount_item_price|intcomma }}</td>
+                                        {% else %}
+                                            <td>₦{{ order_item.get_total_item_price |intcomma}}</td>
+                                        {% endif %}
                                     {% endfor %}
                                 </tr>
                             </tbody>
@@ -116,16 +120,16 @@
                                 {% for order_item in order.items.all %}
                                     <tr>
                                         <th>SubTotal</th>
-                                        <td class="product-subtotal">₦{{ order_item.get_final_price }}</td>
+                                        <td class="product-subtotal">₦{{ order_item.get_final_price|intcomma }}</td>
                                     </tr>
                                 {% endfor %}
                                 <tr>
                                     <th>Shipping</th>
-                                    <td>Free Shipping</td>
+                                    <td>₦0</td>
                                 </tr>
                                 <tr>
                                     <th>Total</th>
-                                    <td class="product-subtotal">₦{{ order.get_total }}</td>
+                                    <td class="product-subtotal">₦{{ order.get_total|intcomma }}</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -137,7 +141,7 @@
                         <div class="payment_option">
                             {% for value, name in form.fields.payment_option.choices %}
                                 <div class="custome-radio">
-                                    <input class="form-check-input" type="radio" id="{{ name }}" name="payment_option" value="{{ value }}">
+                                    <input  type="radio" id="{{ name }}" name="payment_option" value="{{ value }}">
                                     <label for="{{ name }}">{{ name }}</label>
                                 </div>
                             {% endfor %}

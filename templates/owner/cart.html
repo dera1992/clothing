@@ -71,10 +71,10 @@
                                 </td>
                               	<td class="product-subtotal" data-title="Total">
                                     {% if cart_item.item.discount_price %}
-                                        <span>₦{{ cart_item.get_total_discount_item_price }}</span>
+                                        <span>₦{{ cart_item.get_total_discount_item_price|intcomma }}</span>
                                         <span class="badge badge-primary">Saving ₦{{ cart_item.get_amount_saved }}</span>
                                     {% else %}
-                                       <span> ₦{{ cart_item.get_total_item_price }}</span>
+                                       <span> ₦{{ cart_item.get_total_item_price |intcomma}}</span>
                                     {% endif %}
                                 </td>
                                 <td class="product-remove" data-title="Remove"><a href="{% url 'cart:remove_from_cart' cart_item.item.slug %}"><i class="ti-close"></i></a></td>
@@ -118,16 +118,16 @@
                                 <tr>
                                     <td class="cart_total_label">Cart Subtotal</td>
                                     {% for cart_item in cart.items.all %}
-                                        <td class="cart_total_amount">₦{{ cart_item.get_final_price }}</td>
+                                        <td class="cart_total_amount">₦{{ cart_item.get_final_price|intcomma }}</td>
                                     {% endfor %}
                                 </tr>
                                 <tr>
                                     <td class="cart_total_label">Shipping</td>
-                                    <td class="cart_total_amount">Free Shipping</td>
+                                    <td class="cart_total_amount">₦0</td>
                                 </tr>
                                 <tr>
                                     <td class="cart_total_label">Total</td>
-                                    <td class="cart_total_amount"><strong>₦{{ cart.get_total }}</strong></td>
+                                    <td class="cart_total_amount"><strong>₦{{ cart.get_total|intcomma }}</strong></td>
                                 </tr>
                             </tbody>
                         </table>

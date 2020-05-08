@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'bootstrap_datepicker_plus',
     'tracking',
+    'star_ratings',
 ]
 
 MIDDLEWARE = [
@@ -200,3 +201,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ezechdr16@gmail.com'
 EMAIL_HOST_PASSWORD = 'ederabright'
 EMAIL_PORT = 587
+
+STAR_RATINGS_STAR_HEIGHT = 22
+STAR_RATINGS_STAR_WIDTH = 22

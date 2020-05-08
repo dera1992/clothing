@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -17,5 +18,6 @@ urlpatterns = [
     path('product_search/',include('search.urls', namespace='product_search')),
     path('hitcount/', include(('hitcount.urls', 'hitcount'), namespace='hitcount')),
     path('tracking/', include('tracking.urls')),
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings')),
 ]
 if settings.DEBUG:urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

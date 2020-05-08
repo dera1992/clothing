@@ -16,7 +16,7 @@
         <div class="col-md-6 align-self-center">
           <h3>Order Status</h3>
         </div>
-        <div class="col-md-6 text-right font-12"> <a href="index.html">Admin</a>  &gt;  Food Orders</div>
+        <div class="col-md-6 text-right font-12"> <a href="index.html">Admin</a>  &gt;  Product Orders</div>
         <div class="">
           <button class="right-side-toggle waves-effect waves-light bg-primary btn btn-circle btn-sm pull-right ml-10"><i class="ti-settings text-white"></i></button>
         </div>
@@ -25,13 +25,88 @@
       <!-- Start Page Content -->
       <!-- ============================================================== -->
       <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6">
+        {% if user.is_superuser %}
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex pa-10 no-block row">
+                  <div class="col-lg-7 col-md-7 col-sm-7 col p-0">
+                  <h4 class="text-muted mb-10 font-14">Order Placed</h4>
+                  <h2 class="counter"><span class="counter-count font-30 text-themecolor">{{  today_order.count }}</span></h2>
+                  <h6 class="font-12">Today's Order</h6>
+                  </div>
+
+                  <div class="col-lg-5 col-md-5 col-sm-5  col p-0">
+                  <div class="text-center">
+                  <input data-plugin="knob" data-width="93%" data-height="93%" data-linecap=round data-fgColor="#ffc8c9" data-displayInput=false  value="40" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" />
+                  </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                <div class="d-flex pa-10 no-block row">
+                    <div class="col-lg-7 col-md-7 col-sm-7 col  p-0">
+                     <h4 class="text-muted mb-10 font-14">Pending Orders</h4>
+                      <h2 class="counter"><span class="counter-count font-30 text-themecolor">{{ pending_order.count }}</span></h2>
+                      <h6 class="font-12">In Process</h6>
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-5  col p-0">
+                      <div class="text-center">
+                        <input data-plugin="knob" data-width="93%" data-height="93%" data-linecap=round data-fgColor="#cfcfff" data-displayInput=false  value="40" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                    <div class="d-flex pa-10 no-block row">
+                    <div class="col-lg-7 col-md-7 col-sm-7 col p-0">
+                      <h4 class="text-muted mb-10 font-14">Paid Orders</h4>
+                      <h2 class="counter"><span class="counter-count font-30 text-themecolor">{{ paid_order.count }}</span></h2>
+                      <h6 class="font-12">Paid Today</h6>
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-5 col p-0">
+                      <div class="text-center">
+                        <input data-plugin="knob" data-width="93%" data-height="93%" data-linecap=round data-fgColor="#ffd9bd" data-displayInput=false  value="40" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex pa-10 no-block row">
+                <div class="col-lg-7 col-md-7 col-sm-7 col p-0">
+                  <h4 class="text-muted mb-10 font-14">Delivered</h4>
+                  <h2 class="counter"><span class="counter-count font-30 text-themecolor">{{ delivered_order.count }}</span></h2>
+                  <h6 class="font-12">Delivered Today</h6>
+                </div>
+                  <div class="col-lg-5 col-md-5 col-sm-5 col p-0">
+                  <div class="text-center">
+                  <input data-plugin="knob" data-width="93%" data-height="93%" data-linecap=round data-fgColor="#c6f0b1" data-displayInput=false  value="40" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" />
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% else %}
+            <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card">
             <div class="card-body">
               <div class="d-flex pa-10 no-block row">
               <div class="col-lg-7 col-md-7 col-sm-7 col p-0">
               <h4 class="text-muted mb-10 font-14">Order Placed</h4>
-              <h2 class="counter"><span class="counter-count font-30 text-themecolor">1000</span></h2>
+              <h2 class="counter"><span class="counter-count font-30 text-themecolor">{{ my_order.count }}</span></h2>
               <h6 class="font-12">Today's Order</h6>
               </div>
 
@@ -44,60 +119,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card">
-            <div class="card-body">
-            <div class="d-flex pa-10 no-block row">
-                <div class="col-lg-7 col-md-7 col-sm-7 col  p-0">
-                 <h4 class="text-muted mb-10 font-14">Pending Orders</h4>
-                  <h2 class="counter"><span class="counter-count font-30 text-themecolor">1344</span></h2>
-                  <h6 class="font-12">In Process</h6>
-                </div>
-                <div class="col-lg-5 col-md-5 col-sm-5  col p-0">
-                  <div class="text-center">
-                    <input data-plugin="knob" data-width="93%" data-height="93%" data-linecap=round data-fgColor="#cfcfff" data-displayInput=false  value="40" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card">
-            <div class="card-body">
-                <div class="d-flex pa-10 no-block row">
-                <div class="col-lg-7 col-md-7 col-sm-7 col p-0">
-                  <h4 class="text-muted mb-10 font-14">Shipped Orders</h4>
-                  <h2 class="counter"><span class="counter-count font-30 text-themecolor">324</span></h2>
-                  <h6 class="font-12">Shipped Today</h6>
-                </div>
-                <div class="col-lg-5 col-md-5 col-sm-5 col p-0">
-                  <div class="text-center">
-                    <input data-plugin="knob" data-width="93%" data-height="93%" data-linecap=round data-fgColor="#ffd9bd" data-displayInput=false  value="40" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex pa-10 no-block row">
-                <div class="col-lg-7 col-md-7 col-sm-7 col p-0">
-                  <h4 class="text-muted mb-10 font-14">Delivered</h4>
-                  <h2 class="counter"><span class="counter-count font-30 text-themecolor">1234</span></h2>
-                  <h6 class="font-12">Delivered Today</h6>
-                </div>
-                  <div class="col-lg-5 col-md-5 col-sm-5 col p-0">
-                  <div class="text-center">
-                  <input data-plugin="knob" data-width="93%" data-height="93%" data-linecap=round data-fgColor="#c6f0b1" data-displayInput=false  value="40" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" />
-                </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {% endif %}
       </div>
       <div class="card">
         <div class="card-body">
