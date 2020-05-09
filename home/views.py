@@ -158,7 +158,7 @@ def ad_detail(request, id, slug):
         rating = Rating.objects.get(object_id=ad.id)
     except Rating.DoesNotExist:
         pass
-    user_rating = UserRating.objects.filter(rating_id=ad.id)
+    user_rating = UserRating.objects.filter(rating__object_id=ad.id)
     print(user_rating)
     is_favourite = False
 

@@ -168,24 +168,28 @@
                             	<h5 class="product_tab_title">{{ rating.count }} Review For <span>{{ ad.title }}</span></h5>
                                 <ul class="list_none comment_list mt-4">
                                     <li>
-                                        {% for ur in user_rating.ad %}
+                                        {% for ur in user_rating %}
                                             <div class="comment_img">
-                                                <img src="assets/images/user1.jpg" alt="user1"/>
+                                                {% if ur.user.profile.photo %}
+                                                     <img src="{{ ur.user.profile.photo.url }}" alt="user" class="" style="border-radius:50%;" width="100px" height="100px" />
+                                                    {% else %}
+                                                     <img src="{% static 'images/users/1.jpg' %}" alt="user" class="" style="border-radius:50%;" width="100px" height="100px" />
+                                                 {% endif %}
                                             </div>
-                                            {{ ur.score }}
                                             <div class="comment_block">
                                                 <div class="rating_wrap">
-                                                    <div class="rating">
-                                                        <div class="product_rate" style="width:80%"></div>
-                                                    </div>
+
+                                                        <span><i class="fas fa-star" {% if ur.score > 0 %} style="color: orange"{% endif %}></i></span>
+                                                         <span><i class="fas fa-star" {% if ur.score > 1 %} style="color: orange"{% endif %}></i></span>
+                                                         <span><i class="fas fa-star" {% if ur.score > 2 %} style="color: orange"{% endif %}></i></span>
+                                                         <span><i class="fas fa-star" {% if ur.score > 3 %} style="color: orange"{% endif %}></i></span>
+                                                         <span><i class="fas fa-star" {% if ur.score > 4 %} style="color: orange"{% endif %}></i></span>
+
                                                 </div>
                                                 <p class="customer_meta">
-                                                    <span class="review_author">Alea Brooks</span>
-                                                    <span class="comment-date">March 5, 2018</span>
+                                                    <span class="review_author">{{ ur.user.get_full_name }}</span>
+                                                    <span class="comment-date">{{ ur.created }}</span>
                                                 </p>
-                                                <div class="description">
-                                                    <p>Lorem Ipsumin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate</p>
-                                                </div>
                                             </div>
                                         {% endfor %}
                                     </li>
