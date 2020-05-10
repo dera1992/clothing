@@ -16,6 +16,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 
 from datetime import datetime
+from paystack.signals import payment_verified
+
+from django.dispatch import receiver
 
 # import stripe
 # stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -98,7 +101,7 @@ class CheckoutView(View):
                 if payment_option == '0':
                     return redirect('order:payment', payment_option='online payment')
                 elif payment_option == 'T':
-                    return redirect('order:transfer', payment_option='transfer')
+                    return redirect('order:transfer')
                 else:
                     messages.warning(
                         self.request, "Invalid payment option selected")
@@ -110,9 +113,15 @@ class CheckoutView(View):
 class PaymentView(View):
     def get(self, *args, **kwargs):
         order = Order.objects.get(user=self.request.user, is_ordered=False)
+        amount = order.get_total()
+        email = order.user.email
+        print(amount)
         if order.billing_address:
             context = {
                 'order': order,
+                'amount':amount,
+                'email':email
+
             }
             return render(self.request, "owner/payment.html", context)
         else:
@@ -186,14 +195,23 @@ def load_cities(request):
     return render(request, 'owner/city_dropdown_list_options.html', {'cities': cities})
 
 
-def transfer(request,self):
+def transfer(request):
     try:
-        order = Order.objects.get(user=self.request.user, is_ordered=False)
+        order = Order.objects.get(user=request.user, is_ordered=False)
         order.is_ordered = True
         order.save()
         messages.warning(
-            self.request, "Make your payment and your product will get to you")
+            request, "Make your payment and your product will get to you")
         return redirect('order:checkout')
     except ObjectDoesNotExist:
-        messages.warning(self.request, "You do not have an active order")
+        messages.warning(request, "You do not have an active order")
         return redirect("cart:order-summary")
+
+
+@receiver(payment_verified)
+def on_payment_verified(sender, ref,amount, **kwargs):
+    """
+    ref: paystack reference sent back.
+    amount: amount in Naira.
+    """
+    pass

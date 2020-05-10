@@ -84,11 +84,16 @@ def create_contact(request):
         form = InformationForm()
 
         args = {'form': form}
-        return render(request, 'others/contact.html', args)
+        return render(request, 'owner/others/contact.html', args)
 
 def about_us(request):
-    return render(request, 'others/about.html',)
+    return render(request, 'owner/others/about.html', )
 
 def faq(request):
-    return render(request, 'others/faq.html',)
+    return render(request, 'owner/others/faq.html', )
 
+def success(request):
+    return render(request, 'paystack/success-page.html',)
+
+def failure(request):
+    return render(request, 'paystack/failed-page.html',)

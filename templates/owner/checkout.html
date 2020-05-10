@@ -34,13 +34,14 @@
 <!-- START SECTION SHOP -->
 <div class="section">
 	<div class="container">
+    <form action="." id="signup_form" method="post" data-cities-url="{% url 'order:ajax_load_cities' %}" class="order-form">
+                    {% csrf_token %}
         <div class="row">
         	<div class="col-md-6">
             	<div class="heading_s1">
             		<h4>Billing Details</h4>
                 </div>
-                <form action="." id="signup_form" method="post" data-cities-url="{% url 'order:ajax_load_cities' %}" class="order-form">
-                    {% csrf_token %}
+
                     <div class="form-group">
                         <input type="text" class="form-control" name="street_address" required="" placeholder="Address ">
                     </div>
@@ -89,7 +90,6 @@
                         </div>
                     </div>
                     </div>
-                </form>
             </div>
             <div class="col-md-6">
                 <div class="order_review">
@@ -147,10 +147,11 @@
                             {% endfor %}
                         </div>
                     </div>
-                    <button class="btn btn-fill-out btn-block">Place order</button>
+                    <button type="submit" class="btn btn-fill-out btn-block">Place order</button>
                 </div>
             </div>
         </div>
+    </form>
     </div>
 </div>
 <!-- END SECTION SHOP -->

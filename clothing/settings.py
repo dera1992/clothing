@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'tracking',
     'star_ratings',
+    'paystack',
 ]
 
 MIDDLEWARE = [
@@ -204,3 +205,8 @@ EMAIL_PORT = 587
 
 STAR_RATINGS_STAR_HEIGHT = 22
 STAR_RATINGS_STAR_WIDTH = 22
+
+PAYSTACK_PUBLIC_KEY='pk_test_39d8997627614a9240b44f1d4aaedb52aac8cadd'
+PAYSTACK_SECRET_KEY='sk_test_0ff742b9305ca246400186630aa6d5d5729e1476'
+PAYSTACK_SUCCESS_URL='owner:success'
+PAYSTACK_FAILED_URL='owner:failure'
