@@ -34,16 +34,29 @@ class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username','email','first_name', 'last_name',)
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("This username is already used")
+
+        return username
+
+
     def clean_password2(self):
         cd = self.cleaned_data
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Passwords don\'t match.')
         return cd['password2']
 
-    # def clean_email(self):
-    #     email = self.cleaned_data.get("email")
-    #     if User.objects.filter(email=email).exists():
-    #         raise forms.ValidationError("Email already exist")
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email is already used")
+
+        return email
+
 
 class ProfileForm(forms.ModelForm):
     phone = forms.CharField(
@@ -67,6 +80,21 @@ class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email','first_name', 'last_name',)
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("This username is already used")
+
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email is already used")
+
+        return email
 
 class ProfileEditForm(forms.ModelForm):
     phone = forms.CharField(
