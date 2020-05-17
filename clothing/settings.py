@@ -187,15 +187,6 @@ SESSION_SAVE_EVERY_REQUEST = True
 HITCOUNT_KEEP_HIT_ACTIVE = { 'days': 1}
 HITCOUNT_HITS_PER_IP_LIMIT = 0
 
-# SEND_GRID_API_KEY = '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'
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'bright1992'
-# EMAIL_HOST_PASSWORD = 'mcderason199'
-# EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = 'ezechdr16@gmail.com'
-# ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Season food reaching you'
-# EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
