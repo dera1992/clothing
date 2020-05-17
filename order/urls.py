@@ -16,4 +16,5 @@ urlpatterns = [
     path('order_owner/', views.order_owner, name='order_owner'),
     path('payment/<payment_option>/', PaymentView.as_view(), name='payment'),
     path('transfer/', views.transfer, name='transfer'),
+    path('payment_confirm/', views.payment_confirm, name='payment_confirm'),
 ]

@@ -16,6 +16,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 
 from datetime import datetime
+from paystack.views import payment_state
 from paystack.signals import payment_verified
 
 from django.dispatch import receiver
@@ -115,7 +116,6 @@ class PaymentView(View):
         order = Order.objects.get(user=self.request.user, is_ordered=False)
         amount = order.get_total()
         email = order.user.email
-        print(amount)
         if order.billing_address:
             context = {
                 'order': order,
@@ -194,8 +194,32 @@ def load_cities(request):
     cities = Lga.objects.filter(state_id=state_id).order_by('name')
     return render(request, 'owner/city_dropdown_list_options.html', {'cities': cities})
 
-
+@login_required
 def transfer(request):
+    try:
+        order = Order.objects.get(user=request.user, is_ordered=False)
+        order.is_ordered = True
+        order.save()
+        return render(request, 'paystack/success-page.html', )
+    except ObjectDoesNotExist:
+        messages.warning(request, "You do not have an active order")
+        return redirect("cart:order-summary")
+
+@login_required
+def transfer(request):
+    try:
+        order = Order.objects.get(user=request.user, is_ordered=False)
+        order.is_ordered = True
+        order.save()
+        messages.warning(
+            request, "Make your payment and your product will get to you")
+        return redirect('order:checkout')
+    except ObjectDoesNotExist:
+        messages.warning(request, "You do not have an active order")
+        return redirect("cart:order-summary")
+
+@login_required
+def payment_confirm(request):
     try:
         order = Order.objects.get(user=request.user, is_ordered=False)
         order.is_ordered = True
@@ -214,4 +238,7 @@ def on_payment_verified(sender, ref,amount, **kwargs):
     ref: paystack reference sent back.
     amount: amount in Naira.
     """
+    ref = ref
+    amount = amount
+    print(amount)
     pass

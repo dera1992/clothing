@@ -60,6 +60,8 @@ class Order(models.Model):
     paid = models.BooleanField(default=False)
     billing_address = models.ForeignKey(
         'Address', related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
+    payment = models.ForeignKey(
+        'Payment', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         ordering = ('-created',)
@@ -84,6 +86,16 @@ class Address(models.Model):
                               on_delete=models.CASCADE)
     city = models.ForeignKey(Lga,
                               on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+class Payment(models.Model):
+    paystack_charge_id = models.CharField(max_length=50)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.SET_NULL, blank=True, null=True)
+    amount = models.FloatField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.user.username

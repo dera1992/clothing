@@ -159,7 +159,6 @@ def ad_detail(request, id, slug):
     except Rating.DoesNotExist:
         pass
     user_rating = UserRating.objects.filter(rating__object_id=ad.id)
-    print(user_rating)
     is_favourite = False
 
     if ad.favourite.filter(id=request.user.id).exists():
