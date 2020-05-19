@@ -20,6 +20,7 @@ from paystack.views import payment_state
 from paystack.signals import payment_verified
 
 from django.dispatch import receiver
+from datetime import date
 
 # import stripe
 # stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -139,9 +140,9 @@ def order_owner(request):
     lates = Products.objects.all().order_by('-created_date')[:3]
     counts = Products.objects.all().values('category__name').annotate(total=Count('category'))
 
-    today = datetime.date.today()
+    today = date.today()
 
-    my_order = Order.objects.filter(user=request.user,created=today)
+    my_order = Order.objects.filter(user=request.user,created__day=today.day)
 
     paginator = Paginator(order_list, 6)  # Show 25 contacts per page
     page_request_var = "page"
@@ -165,12 +166,12 @@ def order_all(request):
     lates = Products.objects.all().order_by('-created_date')[:3]
     counts = Products.objects.all().values('category__name').annotate(total=Count('category'))
 
-    today = datetime.date.today()
+    today = date.today()
 
-    today_order = Order.objects.filter(created=today)
-    pending_order = Order.objects.filter(created=today)
-    delivered_order = Order.objects.filter(created=today)
-    paid_order = Order.objects.filter(paid=True,created=today)
+    today_order = Order.objects.filter(created__day=today.day)
+    pending_order = Order.objects.filter(created__day=today.day)
+    delivered_order = Order.objects.filter(created__day=today.day)
+    paid_order = Order.objects.filter(paid=True,created__day=today.day)
 
     paginator = Paginator(order_list, 6)  # Show 25 contacts per page
     page_request_var = "page"
@@ -195,7 +196,7 @@ def load_cities(request):
     return render(request, 'owner/city_dropdown_list_options.html', {'cities': cities})
 
 @login_required
-def transfer(request):
+def payment_confirm(request):
     try:
         order = Order.objects.get(user=request.user, is_ordered=False)
         order.is_ordered = True
@@ -218,18 +219,6 @@ def transfer(request):
         messages.warning(request, "You do not have an active order")
         return redirect("cart:order-summary")
 
-@login_required
-def payment_confirm(request):
-    try:
-        order = Order.objects.get(user=request.user, is_ordered=False)
-        order.is_ordered = True
-        order.save()
-        messages.warning(
-            request, "Make your payment and your product will get to you")
-        return redirect('order:checkout')
-    except ObjectDoesNotExist:
-        messages.warning(request, "You do not have an active order")
-        return redirect("cart:order-summary")
 
 
 @receiver(payment_verified)

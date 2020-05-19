@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User
 from django import forms
 
@@ -75,26 +76,34 @@ class ProfileForm(forms.ModelForm):
         fields = ('phone','address')
 
 
+class UserEditForm(UserChangeForm):
+    def __init__(self, *args, **kwargs):
+        super(UserEditForm, self).__init__(*args, **kwargs)
+        del self.fields['password']
 
-class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'email','first_name', 'last_name',)
+        fields = ('username','email','first_name','last_name')
 
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
-        if User.objects.filter(username=username).exists():
-            raise forms.ValidationError("This username is already used")
+# class UserEditForm(forms.ModelForm):
+#     class Meta:
+#         model = User
+#         fields = ('username', 'email','first_name', 'last_name',)
 
-        return username
-
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-
-        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("This email is already used")
-
-        return email
+    # def clean_username(self):
+    #     username = self.cleaned_data.get('username')
+    #     if User.objects.filter(username=username).exists():
+    #         raise forms.ValidationError("This username is already used")
+    #
+    #     return username
+    #
+    # def clean_email(self):
+    #     email = self.cleaned_data.get('email')
+    #
+    #     if User.objects.filter(email=email).exists():
+    #         raise forms.ValidationError("This email is already used")
+    #
+    #     return email
 
 class ProfileEditForm(forms.ModelForm):
     phone = forms.CharField(

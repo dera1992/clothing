@@ -39,6 +39,8 @@
 <link href="{% static 'css/master-stylesheet.css' %}" rel="stylesheet">
 <!-- You can change the theme colors from here -->
 <link href="{% static 'css/colors/default.css' %}" id="theme" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'date/jquery-ui.css' %}">
+<link rel='stylesheet' href="{% static 'date/jquery-ui-timepicker-addon.css' %}" />
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -108,19 +110,20 @@
     </nav>
   </header>
 
-  {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}<a href="#" class="close">x</a></li>
-        {% endfor %}
-    </ul>
-  {% endif %}
-
   {% include 'sidebar_admin.html' %}
 
 
   <div class="page-wrapper">
-
+     {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endfor %}
+    {% endif %}
     {% block content %}
 
     {% endblock %}
@@ -190,6 +193,13 @@
 <!--Sparkline JavaScript -->
 <script src="{% static 'assets/vendors/sparkline/jquery.sparkline.min.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="{% static 'date/jquery-ui.js' %}" ></script>
+<script src="{% static 'date/jquery-ui-timepicker-addon.js' %}"></script>
+<script>
+  $( function() {
+    $( "#id_date_of_birth" ).datepicker({dateFormat: 'yy-mm-dd'}).attr("autocomplete", "off");
+  } );
+  </script>
 <script>
 
     $(function () {

@@ -43,6 +43,8 @@
 
       <div class="col-lg-8 col-md-6 col-sm-12">
       <form  id="signup_form" method="post" action="{% url 'edit' %}">
+          {% csrf_token %}
+
         <div class="card">
           <div class="card-body">
             <h2 class="font-20 text-blue">Basic Info</h2>
@@ -75,20 +77,6 @@
               <div class="col-md-6">
                 <div class="form-group">
                   {% bootstrap_field profile_form.phone %}
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <input class="form-control" type="text" placeholder="City">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <select class="form-control">
-                    <option>Country</option>
-                    <option>Country</option>
-                    <option>Country</option>
-                  </select>
                 </div>
               </div>
               <div class="col-md-12">
