@@ -68,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'clothing.urls'
@@ -84,6 +85,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'cart.context_processors.cart',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -103,7 +106,7 @@ DATABASES = {
 }
 
 
-SOCIAL_AUTH_AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.open_id.OpenIdAuth',
     'social_core.backends.google.GoogleOpenId',
@@ -173,14 +176,26 @@ LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = '/'
 
 
-SOCIAL_AUTH_FACEBOOK_KEY = 'XXX'
-SOCIAL_AUTH_FACEBOOK_SECRET = 'XXX'
+SOCIAL_AUTH_FACEBOOK_KEY = ''
+SOCIAL_AUTH_FACEBOOK_SECRET = ''
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+            'fields': 'id,name,email, picture.type(large), link'
+            }
+
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [                 # add this
+    ('name', 'name'),
+    ('email', 'email'),
+    ('picture', 'picture'),
+    ('link', 'profile_url'),
+]
+SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
 
 SOCIAL_AUTH_TWITTER_KEY = 'XXX'
 SOCIAL_AUTH_TWITTER_SECRET = 'XXX'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'XXX'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'XXX'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
 
 SESSION_SAVE_EVERY_REQUEST = True
 
@@ -201,3 +216,5 @@ PAYSTACK_PUBLIC_KEY='pk_test_39d8997627614a9240b44f1d4aaedb52aac8cadd'
 PAYSTACK_SECRET_KEY='sk_test_0ff742b9305ca246400186630aa6d5d5729e1476'
 PAYSTACK_SUCCESS_URL='order:payment_confirm'
 PAYSTACK_FAILED_URL='owner:failure'
+
+# SOCIAL_AUTH_POSTGRES_JSONFIELD = True
