@@ -1,0 +1,4 @@
+<option value="Select Subcategory" disabled selected>SubCategories</option>
+{% for subcategory in subcategories %}
+    <option value="{{ subcategory.name }}" {% if subcategory.name == request.GET.subcategory.strip %}selected{% endif %}>{{ subcategory.name }}</option>
+{% endfor %}

@@ -12,39 +12,9 @@
 
 <!-- START SECTION BANNER -->
 <div class="banner_section slide_medium shop_banner_slider staggered-animation-wrap">
-    <div id="carouselExampleControls" class="carousel slide carousel-fade light_arrow" data-ride="carousel">
+    <div id="carouselExampleControls">
         <div class="carousel-inner">
-            <div class="carousel-item active background_bg" data-img-src="{% static 'assets/images/banner1.jpg' %}">
-                <div class="banner_slide_content">
-                    <div class="container"><!-- STRART CONTAINER -->
-                        <div class="row">
-                            <div class="col-lg-7 col-9">
-                                <div class="banner_content overflow-hidden">
-                                	<h5 class="mb-3 staggered-animation font-weight-light" data-animation="slideInLeft" data-animation-delay="0.5s">Get up to 50% off Today Only!</h5>
-                                    <h2 class="staggered-animation" data-animation="slideInLeft" data-animation-delay="1s">Woman Fashion</h2>
-                                    <a class="btn btn-fill-out rounded-0 staggered-animation text-uppercase" href="shop-left-sidebar.html" data-animation="slideInLeft" data-animation-delay="1.5s">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- END CONTAINER-->
-                </div>
-            </div>
-            <div class="carousel-item background_bg" data-img-src="{% static 'assets/images/banner2.jpg' %}">
-                <div class="banner_slide_content">
-                    <div class="container"><!-- STRART CONTAINER -->
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="banner_content overflow-hidden">
-                                	<h5 class="mb-3 staggered-animation font-weight-light" data-animation="slideInLeft" data-animation-delay="0.5s">50% off in all products</h5>
-                                    <h2 class="staggered-animation" data-animation="slideInLeft" data-animation-delay="1s">Man Fashion</h2>
-                                    <a class="btn btn-fill-out rounded-0 staggered-animation text-uppercase" href="shop-left-sidebar.html" data-animation="slideInLeft" data-animation-delay="1.5s">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- END CONTAINER-->
-                </div>
-            </div>
-            <div class="carousel-item background_bg" data-img-src="{% static 'assets/images/banner3.jpg' %}">
+            <div class="carousel-item active background_bg" data-img-src="{% static 'assets/images/banner3.jpg' %}">
                 <div class="banner_slide_content">
                     <div class="container"><!-- STRART CONTAINER -->
                         <div class="row">
@@ -92,8 +62,8 @@
                                         <div class="product_img">
                                             <a href="{{ ad.get_absolute_url }}">
                                                 {% for images in ad.get_second_image %}
-                                                    {% thumbnail images.product_image "255x283" crop="10px 10px"  as im %}
-                                                            <img  style="margin:{{ im|margin:"255x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"  />
+                                                    {% thumbnail images.product_image "330x283" crop="10px 10px"  as im %}
+                                                            <img  style="margin:{{ im|margin:"330x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"  />
                                                     {% endthumbnail %}
                                                 {% endfor %}
                                             </a>
@@ -170,8 +140,8 @@
                             <div class="product_img">
                                 <a href="{{ latest.get_absolute_url }}">
                                     {% for images in latest.get_second_image %}
-                                        {% thumbnail images.product_image "255x283" crop="10px 10px"  as im %}
-                                                <img  style="margin:{{ im|margin:"255x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"  />
+                                        {% thumbnail images.product_image "330x283" crop="10px 10px"  as im %}
+                                                <img  style="margin:{{ im|margin:"330x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"  />
                                         {% endthumbnail %}
                                     {% endfor %}
                                 </a>
@@ -192,7 +162,7 @@
                                     {% else %}
                                         <ul class="list_none pr_action_btn">
                                                 <li class="add-to-cart"><a href="{% url 'home:favourite_ad' id=latest.id %}" id = "cart" data-id="{{ latest.id }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
-                                                <li><a href="{% url 'home:favourite_ad' id=latest.id %}" id = "wishlist" data-id="{{ latest.id }}"><i class="icon-heart-alt"></i></a></li>
+                                                <li><a href="{% url 'home:favourite_ad' id=latest.id %}" id = "wishlist" data-id="{{ latest.id }}"><i class="icon-heart"></i></a></li>
                                             </ul>
                                     {% endif %}
                                 </div>

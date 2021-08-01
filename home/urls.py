@@ -19,5 +19,6 @@ urlpatterns = [
     path('<int:id>/favourite_delete/',views.favourite_delete, name='favourite_delete'),
     path('<int:id>/<slug:slug>/', views.ad_detail, name='ad_detail'),
     path('category_count/',views.category_count,name='category_count'),
+    path('ajax/load-subs/', views.load_subcategories, name='ajax_load_subs'),
 
 ]

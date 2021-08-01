@@ -29,6 +29,7 @@ def postAd(request):
             post_form = postForm.save(commit=False)
             post_form.profile = request.user.profile
             post_form.save()
+            postForm.save_m2m()
 
             for form in formset.cleaned_data:
                 if form:
@@ -61,6 +62,7 @@ def editAd(request, pk):
             post_form = postForm.save(commit=False)
             post_form.profile = request.user.profile
             post_form.save()
+            postForm.save_m2m()
 
             data = ProductsImages.objects.filter(products=ad)
             for index, f in enumerate(formset):

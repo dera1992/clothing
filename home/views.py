@@ -91,6 +91,7 @@ def ads_list(request, category_slug=None):
     latests = Products.objects.filter(available=True).order_by('-created', '?')[:6]
     qs = Products.objects.all()
     categories = Category.objects.all()
+    subcategories = SubCategory.objects.all()
 
     is_favourite = False
 
@@ -108,7 +109,8 @@ def ads_list(request, category_slug=None):
     except EmptyPage:
         ads = paginator.page(paginator.num_pages)
     return render(request,'home/product_list.html', {'category': category,'categories': categories,'ads': ads,'latests':latests,
-                                              'queryset': qs,'is_favourite': is_favourite,'order': order,'page': page})
+                                              'queryset': qs,'is_favourite': is_favourite,'order': order,'page': page,
+                                              'subcategories':subcategories})
 
 # admin ad list
 @login_required
@@ -256,5 +258,10 @@ def category_count(request):
     counts = Products.objects.all().values('category__name').annotate(total=Count('category'))
     lates = Products.objects.order_by('-created_date')[:3]
     return render(request, 'home/footer.html', {'counts': counts, 'lates':lates})
+
+def load_subcategories(request):
+    cat_id = request.GET.get('category')
+    subcategories = SubCategory.objects.filter(category_id=cat_id).order_by('name')
+    return render(request, 'owner/sub_dropdown_list_options.html', {'subcategories': subcategories})
 
 

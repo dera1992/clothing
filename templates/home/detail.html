@@ -269,9 +269,9 @@
                                 <div class="product_price">
                                     {% if similar.discount_price %}
                                         <span class="price">₦{{ similar.discount_price|intcomma}}</span>
-                                        <del>₦{{ similar.discount_price|intcomma}}</del>
+                                        <del>₦{{ similar.price|intcomma}}</del>
                                      {% else %}
-                                        <span class="price">₦{{ similar.discount_price|intcomma}}</span>
+                                        <span class="price">₦{{ similar.price|intcomma}}</span>
                                     {% endif %}
                                 </div>
                             </div>

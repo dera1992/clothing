@@ -82,16 +82,17 @@
                         </div>
                     </div>
                     <div class="row shop_container">
+                    {% for ad in ads %}
                         <div class="col-md-4 col-6">
-                            {% for ad in ads %}
+
                                 <div class="product">
                                     <div class="product_img">
                                         <a href="{{ ad.get_absolute_url }}">
                                             <span class="{{ ad.get_label_display }}">{{ ad.status }}</span>
                                             {% for images in ad.get_second_image %}
-                                                {% thumbnail images.product_image "255x283" crop="10px 10px"  as im %}
+                                                {% thumbnail images.product_image "330x283" crop="10px 10px"  as im %}
                                                     <a href="{{ ad.get_absolute_url }}">
-                                                        <img  style="margin:{{ im|margin:"255x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" class="" alt="" />
+                                                        <img  style="margin:{{ im|margin:"330x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" class="" alt="" />
                                                     </a>
                                                 {% endthumbnail %}
                                             {% endfor %}
@@ -118,30 +119,31 @@
                                         </div>
                                     </div>
                                 </div>
-                            {% endfor %}
+
                         </div>
+                    {% endfor %}
                     </div>
                     <div class="row">
                         <div class="col-12">
                             {% if ads.has_other_pages %}
                               <ul class="pagination mt-3 justify-content-center pagination_style1">
                                 {% if ads.has_previous %}
-                                  <li><a href="?page={{ ads.previous_page_number }}" class="page-link"> <i class="linearicons-arrow-left"></i></a></li>
+                                  <li class="page-item"><a href="?page={{ ads.previous_page_number }}" class="page-link"> <i class="linearicons-arrow-left"></i></a></li>
                                 {% else %}
-                                  <li class="disabled"><span>&laquo;</span></li>
+                                  <li class="page-item disabled"><a class="page-link"> <i class="linearicons-arrow-left"></i></a></li>
                                 {% endif %}
                                 {% for i in ads.paginator.page_range %}
                                   {% if ads.number == i %}
-                                    <li><a class="page-link active"><span>{{ i }}<span class="sr-only">(current)</span></span></a></li>
+                                    <li class="page-item active"><a class="page-link"><span>{{ i }}<span class="sr-only">(current)</span></span></a></li>
                                   {% else %}
         {#                                    <li><a href="?page={{ i }}">{{ i }}</a></li>#}
-                                    <li><a href={% relatived_url i 'page' request.GET.urlencode %}>{{ i }}</a></li>
+                                    <li class="page-item"><a class="page-link" href={% relatived_url i 'page' request.GET.urlencode %}>{{ i }}</a></li>
                                   {% endif %}
                                 {% endfor %}
                                 {% if ads.has_next %}
-                                  <li><a href="?page={{ ads.next_page_number }}" class="page-link"><i class="linearicons-arrow-right"></i></a></li>
+                                  <li class="page-item"><a href="?page={{ ads.next_page_number }}" class="page-link"><i class="linearicons-arrow-right"></i></a></li>
                                 {% else %}
-                                  <li class="disabled"><span>&raquo;</span></li>
+                                  <li class="page-item disabled"><a class="page-link"><i class="linearicons-arrow-right"></i></a></li>
                                 {% endif %}
                               </ul>
                             {% endif %}

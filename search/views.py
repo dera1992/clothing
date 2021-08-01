@@ -16,7 +16,7 @@ def filter(request):
     order = request.GET.get('order', '')
     # qs = qs.order_by(order)
     categories = Category.objects.all()
-    subcategory = SubCategory.objects.all()
+    subcategories = SubCategory.objects.all()
     is_favourite = False
     title_contains_query = request.GET.get('title_contains_query')
     price_min = request.GET.get('price_min')
@@ -66,7 +66,7 @@ def filter(request):
 
     context = {
         'queryset': queryset,'categories': categories,'is_favourite': is_favourite,
-        'order': order,'page': page,
+        'order': order,'page': page,'subcategories':subcategories
 
     }
 

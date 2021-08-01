@@ -92,6 +92,12 @@ def about_us(request):
 def faq(request):
     return render(request, 'owner/others/faq.html', )
 
+def terms_conditions(request):
+    return render(request, 'owner/others/terms.html', )
+
+def privacy(request):
+    return render(request, 'owner/others/privacy.html', )
+
 def success(request):
     return render(request, 'paystack/success-page.html',)
 

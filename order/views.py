@@ -16,8 +16,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 
 from datetime import datetime
-from paystack.views import payment_state
-from paystack.signals import payment_verified
+# from paystack.views import payment_state
+# from paystack.signals import payment_verified
 
 from django.dispatch import receiver
 from datetime import date
@@ -221,13 +221,13 @@ def transfer(request):
 
 
 
-@receiver(payment_verified)
-def on_payment_verified(sender, ref,amount, **kwargs):
-    """
-    ref: paystack reference sent back.
-    amount: amount in Naira.
-    """
-    ref = ref
-    amount = amount
-    print(amount)
-    pass
+# @receiver(payment_verified)
+# def on_payment_verified(sender, ref,amount, **kwargs):
+#     """
+#     ref: paystack reference sent back.
+#     amount: amount in Naira.
+#     """
+#     ref = ref
+#     amount = amount
+#     print(amount)
+#     pass
