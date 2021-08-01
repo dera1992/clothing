@@ -87,6 +87,8 @@ TEMPLATES = [
                 'cart.context_processors.cart',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+
+                'search.context_processors.categories',
             ],
         },
     },

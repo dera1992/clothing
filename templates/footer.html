@@ -8,7 +8,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-12">
                 	<div class="widget">
                         <div class="footer_logo">
-                            <a href="#"><img src="assets/images/logo_light.png" alt="logo"/></a>
+                            <a href="#"><img src="{% static 'assets/images/logo_light.png' %}" alt="logo"/></a>
                         </div>
                         <p>If you are going to use of Lorem Ipsum need to be sure there isn't hidden of text</p>
                     </div>
@@ -28,7 +28,7 @@
                         <ul class="widget_links">
                             <li><a href="{% url "owner:about_us" %}">About Us</a></li>
                             <li><a href="{% url "owner:faq" %}">FAQ</a></li>
-                            <li><a href="{% url 'blog:list' %}">Blog</a></li>
+{#                            <li><a href="{% url 'blog:list' %}">Blog</a></li>#}
                             <li><a href="{% url "owner:create_contact" %}">Contact</a></li>
                             <li><a href="{% url 'owner:terms_conditions' %}">Terms & Conditions</a></li>
                             <li><a href="{% url "owner:privacy" %}">Privacy Policy</a></li>

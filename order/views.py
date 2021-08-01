@@ -22,42 +22,17 @@ from datetime import datetime
 from django.dispatch import receiver
 from datetime import date
 
-# import stripe
-# stripe.api_key = settings.STRIPE_SECRET_KEY
+import random
+import string
 
 # Create your views here.
 
 @login_required()
 def order_create(request):
-    # cart = Cart(request)
-    # user_profile = get_object_or_404(Profile, user=request.user)
-    # if request.method == 'POST':
-    #     form = OrderCreateForm(request.POST)
-    #     if form.is_valid():
-    #         form.ref_code = generate_order_id()
-    #         order = form.save()
-    #         for item in cart:
-    #             OrderItem.objects.create(order=order,
-    #                                      product=item['product'],
-    #                                      price=item['price'],
-    #                                      quantity=item['quantity'])
-    #         # clear the cart
-    #         cart.clear()
-    #         order_created.delay(order.id)
-    #         messages.success(request, 'You have make order successful')
-    #         return render(request,
-    #                       'owner/checkout.html',
-    #                       {'order': order})
-    #         # return redirect(reverse('payment:process'))
-    # else:
-    #     first_name = user_profile.user.first_name
-    #     last_name = user_profile.user.last_name
-    #     email = user_profile.user.email
-    #     phone = user_profile.phone
-    #     address = user_profile.address
-    #     data = {'first_name':first_name,'last_name':last_name,'email':email,'phone':phone,'address':address}
-    #     form = OrderCreateForm(initial=data)
     return render(request, 'owner/checkout.html')
+
+def create_ref_code():
+    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
 class CheckoutView(View):
     def get(self, *args, **kwargs):
@@ -199,7 +174,15 @@ def load_cities(request):
 def payment_confirm(request):
     try:
         order = Order.objects.get(user=request.user, is_ordered=False)
+
+        order_items = order.items.all()
+        order_items.update(is_ordered=True)
+        for item in order_items:
+            item.save()
+
         order.is_ordered = True
+        order.paid = True
+        order.ref_code = create_ref_code()
         order.save()
         return render(request, 'paystack/success-page.html', )
     except ObjectDoesNotExist:
@@ -210,11 +193,18 @@ def payment_confirm(request):
 def transfer(request):
     try:
         order = Order.objects.get(user=request.user, is_ordered=False)
+
+        order_items = order.items.all()
+        order_items.update(is_ordered=True)
+        for item in order_items:
+            item.save()
+
         order.is_ordered = True
+        order.ref_code = create_ref_code()
         order.save()
         messages.warning(
             request, "Make your payment and your product will get to you")
-        return redirect('order:checkout')
+        return redirect('order:order_owner')
     except ObjectDoesNotExist:
         messages.warning(request, "You do not have an active order")
         return redirect("cart:order-summary")

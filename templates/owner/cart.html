@@ -14,7 +14,7 @@
         <div class="row align-items-center">
         	<div class="col-md-6">
                 <div class="page-title">
-            		<h1>Shopping Cart</h1>
+            		<h6>Shopping Cart</h6>
                 </div>
             </div>
             <div class="col-md-6">
@@ -80,11 +80,11 @@
                                 <td class="product-remove" data-title="Remove"><a href="{% url 'cart:remove_from_cart' cart_item.item.slug %}"><i class="ti-close"></i></a></td>
                             </tr>
                         {% empty %}
-                             <tr>
-                                <td class="container-fluid " >
-                                    <h5 class="justify-content-center" style="text-align:center;"> You have no food in your cart <a class="btn btn-secondary " href="/">Shop Now</a></h5>
-                                </td>
-                             </tr>
+{#                             <tr>#}
+{#                                <td >#}
+                                    <h5 class="justify-content-center" style="text-align:center;"> You have no product in your cart <a class="btn btn-secondary " href="/">Shop Now</a></h5>
+{#                                </td>#}
+{#                             </tr>#}
                         {% endfor %}
                         </tbody>
                     </table>

@@ -20,7 +20,7 @@
         <div class="row align-items-center">
         	<div class="col-md-6">
                 <div class="page-title">
-            		<h1>Product Detail</h1>
+            		<h6>Product Detail</h6>
                 </div>
             </div>
             <div class="col-md-6">
@@ -95,13 +95,11 @@
 
                             <span class="rating_num">({{ rating.count }})</span>
                         </div>
-                        <div class="pr_desc">
-                            <p>{{ ad.description.capitalize }}</p>
+                        <div class="pr_desc col-md-12">
+{#                            <p>{{ ad.description.capitalize }}</p>#}
                         </div>
                         <div class="product_sort_info">
                             <ul>
-                                <li><i class="linearicons-shield-check"></i> 1 Year AL Jazeera Brand Warranty</li>
-                                <li><i class="linearicons-sync"></i> 30 Day Return Policy</li>
                                 <li><i class="linearicons-bag-dollar"></i> Cash on Delivery available</li>
                             </ul>
                         </div>
@@ -117,7 +115,7 @@
                     <hr />
                     <div class="cart_extra">
                         <div class="cart_btn">
-                            <button class="btn btn-fill-out btn-addtocart" type="button"><i class="icon-basket-loaded"></i> Add to cart</button>
+                            <button class="btn btn-fill-out btn-addtocart" type="button"><i class="icon-basket-loaded"></i> <a href="{{ ad.get_add_to_cart_url }}">Add to cart</a></button>
                             {% if is_favourite %}
                                <a href="{% url 'home:favourite_ad' id=ad.id %}" class="add_wishlist"> <i class="fas fa-heart" style="color:red"></i></a>
                             {% else %}
@@ -258,7 +256,7 @@
                                         {% endif %}
                                     {% else %}
                                         <ul class="list_none pr_action_btn">
-                                                <li class="add-to-cart"><a href="{% url 'home:favourite_ad' id=similar.id %}" id = "cart" data-id="{{ similar.id }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
+                                                <li class="add-to-cart"><a href="{{ ad.get_add_to_cart_url }}" id = "cart" data-id="{{ similar.id }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
                                                 <li><a href="{% url 'home:favourite_ad' id=similar.id %}" id = "wishlist" data-id="{{ similar.id }}"><i class="icon-heart-alt"></i></a></li>
                                             </ul>
                                     {% endif %}

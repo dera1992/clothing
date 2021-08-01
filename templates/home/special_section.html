@@ -14,7 +14,7 @@
     {% endif %}
 {% else %}
     <ul class="list_none pr_action_btn">
-        <li class="add-to-cart"><a href="{% url 'home:favourite_ad' id=ad.id %}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
+        <li class="add-to-cart"><a href="{{ ad.get_add_to_cart_url }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
         <li><a href="{% url 'home:favourite_ad' id=ad.id %}"><i class="icon-heart"></i></a></li>
     </ul>
 {% endif %}

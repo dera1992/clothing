@@ -52,7 +52,7 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     items = models.ManyToManyField(OrderItem)
-    ref_code = models.CharField(max_length=15, null=True, blank=True)
+    ref_code = models.CharField(max_length=25, null=True, blank=True)
     is_ordered = models.BooleanField(default=False)
     date_ordered = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -62,6 +62,8 @@ class Order(models.Model):
         'Address', related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
     payment = models.ForeignKey(
         'Payment', on_delete=models.SET_NULL, blank=True, null=True)
+    being_delivered = models.BooleanField(default=False)
+    received = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('-created',)
