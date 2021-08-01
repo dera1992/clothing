@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
-from productCreate.models import Products, ProductsImages, Category, SubCategory
+from productCreate.models import Products, ProductsImages, Category, SubCategory,ProductSize
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -91,6 +91,7 @@ def ads_list(request, category_slug=None):
     latests = Products.objects.filter(available=True).order_by('-created', '?')[:6]
     qs = Products.objects.all()
     categories = Category.objects.all()
+    sizes = ProductSize.objects.all()
 
     is_favourite = False
 
@@ -108,7 +109,7 @@ def ads_list(request, category_slug=None):
     except EmptyPage:
         ads = paginator.page(paginator.num_pages)
     return render(request,'home/product_list.html', {'category': category,'categories': categories,'ads': ads,'latests':latests,
-                                              'queryset': qs,'is_favourite': is_favourite,'order': order,'page': page})
+                                              'queryset': qs,'is_favourite': is_favourite,'order': order,'page': page,'sizes':sizes})
 
 # admin ad list
 @login_required
@@ -117,6 +118,7 @@ def allads_list(request, category_slug=None):
     ad_list = Products.objects.all().order_by('-created', '?')
     categories = Category.objects.all()
     states = Products.objects.all()
+    sizes = ProductSize.objects.all()
     query = request.GET.get('q')
     if query:
         ad_list = ad_list.filter(
@@ -141,7 +143,7 @@ def allads_list(request, category_slug=None):
     except EmptyPage:
         ads = paginator.page(paginator.num_pages)
     return render(request,'home/allads_list.html', {'category': category,'categories': categories,'ads': ads,
-                                              'states':states,})
+                                              'states':states,'sizes':sizes})
 
 
 def ad_detail(request, id, slug):

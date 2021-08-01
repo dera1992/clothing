@@ -142,14 +142,22 @@
                   <tbody>
                   {% for ord in allorder %}
                     <tr>
-                      <td><img src="{{ ord.order.profile.photo.url }}" alt="" title="" class="profile-img2 img-circle"></td>
-                      <td>{{ ord.order.first_name }} {{ order.last_name }}</td>
-                      <td><a href="mailto:test@example.com">{{ ord.order.email }}</a></td>
-                      <td>{{ ord.product.title }}</td>
-                      <td>{{ ord.order.phone}}</td>
-                      <td><a href="#" class="btn waves-effect waves-light btn-rounded close-bt">{{ ord.order.paid }} </a></td>
-                      <td>{{ ord.order.ref_code }}</td>
-                      <td>{{ ord.order.date_ordered }}</td>
+                      <td>
+                          {% if ord.user.profile.photo %}
+                             <img src="{{ ord.user.profile.photo.url }}" alt="" title="" class="profile-img2 img-circle">
+                          {% endif %}
+                      </td>
+                      <td>{{ ord.user.first_name }} {{ ord.user.last_name }}</td>
+                      <td><a href="mailto:test@example.com">{{ ord.user.email }}</a></td>
+                      <td>
+                          {% for ord_item in ord.items.all %}
+                              {{ ord_item.quantity }}X {{ ord_item.item.title }}
+                          {% endfor %}
+                      </td>
+                      <td>{{ ord.user.profile.phone}}</td>
+                      <td><a href="#" class="btn waves-effect waves-light btn-rounded close-bt">{{ ord.paid }} </a></td>
+                      <td>{{ ord.ref_code }}</td>
+                      <td>{{ ord.date_ordered }}</td>
                     </tr>
                   {% endfor %}
                   </tbody>

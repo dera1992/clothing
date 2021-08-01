@@ -1,6 +1,6 @@
 from django.db.models import Q, Count
 from django.shortcuts import render, get_object_or_404
-from productCreate.models import Products, Category, SubCategory
+from productCreate.models import Products, Category, SubCategory,ProductSize
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, Http404,HttpResponse, JsonResponse
@@ -17,6 +17,7 @@ def filter(request):
     # qs = qs.order_by(order)
     categories = Category.objects.all()
     subcategory = SubCategory.objects.all()
+    sizes = ProductSize.objects.all()
     is_favourite = False
     title_contains_query = request.GET.get('title_contains_query')
     price_min = request.GET.get('price_min')
@@ -24,6 +25,7 @@ def filter(request):
     date_min = request.GET.get('date_min')
     date_max = request.GET.get('date_max')
     category = request.GET.get('category')
+    size = request.GET.get('size')
 
     if is_valid_queryparam(title_contains_query):
         qs = qs.filter(Q(title__icontains=title_contains_query )
@@ -46,6 +48,9 @@ def filter(request):
     if is_valid_queryparam(category) and category != 'Choose...':
         qs = qs.filter(category__name=category)
 
+    if is_valid_queryparam(size):
+        qs = qs.filter(size__name=size)
+
 
     if order == "price":
         qs = qs.order_by(order)
@@ -66,8 +71,10 @@ def filter(request):
 
     context = {
         'queryset': queryset,'categories': categories,'is_favourite': is_favourite,
-        'order': order,'page': page,
+        'order': order,'page': page,'sizes':sizes
 
     }
 
     return render(request, "search/main_search.html", context)
+
+

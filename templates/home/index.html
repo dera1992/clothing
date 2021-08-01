@@ -92,8 +92,8 @@
                                         <div class="product_img">
                                             <a href="{{ ad.get_absolute_url }}">
                                                 {% for images in ad.get_second_image %}
-                                                    {% thumbnail images.product_image "255x283" crop="10px 10px"  as im %}
-                                                            <img  style="margin:{{ im|margin:"255x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"  />
+                                                    {% thumbnail images.product_image "330x283" crop="10px 10px"  as im %}
+                                                            <img  style="margin:{{ im|margin:"330x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"  />
                                                     {% endthumbnail %}
                                                 {% endfor %}
                                             </a>
@@ -170,8 +170,8 @@
                             <div class="product_img">
                                 <a href="{{ latest.get_absolute_url }}">
                                     {% for images in latest.get_second_image %}
-                                        {% thumbnail images.product_image "255x283" crop="10px 10px"  as im %}
-                                                <img  style="margin:{{ im|margin:"255x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"  />
+                                        {% thumbnail images.product_image "330x283" crop="10px 10px"  as im %}
+                                                <img  style="margin:{{ im|margin:"330x283" }}" src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}"  />
                                         {% endthumbnail %}
                                     {% endfor %}
                                 </a>
@@ -191,7 +191,7 @@
                                         {% endif %}
                                     {% else %}
                                         <ul class="list_none pr_action_btn">
-                                                <li class="add-to-cart"><a href="{% url 'home:favourite_ad' id=latest.id %}" id = "cart" data-id="{{ latest.id }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
+                                                <li class="add-to-cart"><a href="{{ ad.get_add_to_cart_url }}" id = "cart" data-id="{{ latest.id }}"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
                                                 <li><a href="{% url 'home:favourite_ad' id=latest.id %}" id = "wishlist" data-id="{{ latest.id }}"><i class="icon-heart-alt"></i></a></li>
                                             </ul>
                                     {% endif %}

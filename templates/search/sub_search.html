@@ -39,15 +39,16 @@
 
             <div class="widget">
                 <h5 class="widget_title">Size</h5>
-                <div class="product_size_switch">
-                    <span>xs</span>
-                    <span>s</span>
-                    <span>m</span>
-                    <span>l</span>
-                    <span>xl</span>
-                    <span>2xl</span>
-                    <span>3xl</span>
-                </div>
+{#                <div class="row">#}
+                {% for size in sizes %}
+                     <div class="product_size_switch">
+{#                        <span>#}
+                            <input type="radio" id="{{ size.name }}" {% if size.name == request.GET.size.strip %}checked{% endif %} name="size" value="{{ size.name }}">
+                            <label for="{{ size.name }}">{{ size.name }} </label>
+{#                        </span>#}
+                    </div>
+                {% endfor %}
+{#                </div>#}
             </div>
 
             <div class="widget">
