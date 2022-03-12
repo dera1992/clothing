@@ -30,7 +30,7 @@ more-itertools==8.0.2
 mysqlclient==2.0.1
 oauthlib==3.1.0
 Paperboy==1.0.1
-Pillow==6.2.1
+Pillow==9.0.1
 PyJWT==1.7.1
 python-dateutil==2.8.1
 python3-openid==3.1.0
